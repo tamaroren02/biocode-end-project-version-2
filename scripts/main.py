@@ -68,8 +68,8 @@ def compre(original_str, mutation_str):
             is_conserved_list.append("not saved")
 
     return is_conserved_list    
-
-def Mutate_protein(seq):
+#------------------------------------------------
+def Mutate_protein(seq):#מקבלת רצף חומצות אמינו של חיה ומחזירה את אותו רצף רק עם מוטצות נוקדתיות של החלפה
   '''
   '''
   amini_acids_list = ['F', 'S', 'Y', 'C', 'L', '*', 'W',
