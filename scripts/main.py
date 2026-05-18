@@ -1,8 +1,8 @@
 #פונקציות#
 #------------------------------------------------
-def amino_acid_to_string(amino_list):#הופך את הליסט לסטרינג
-    amino_list_string = "".join(amino_list)
-    return amino_list_string
+def seq_to_string(seq):#הופך את הליסט לסטרינג
+    seq_string = "".join(seq)
+    return seq_string
 #------------------------------------------------
 
 def is_conserved(amino_list):
