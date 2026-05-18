@@ -1,3 +1,5 @@
+#פונקציות#
+
 def is_conserved(amino_list):
     #מיפוי תכונות של חומצות אמינו
     amino_groups = [['R','H','K'],['D','E'],['S', 'T', 'N', 'Q'],['P', 'C', 'G'],['A', 'V', 'I','L', 'M', 'F','Y', 'W']]
@@ -30,5 +32,63 @@ def is_conserved(amino_list):
         if counter_list[i] >= 4:
             return 1
     return 0   
+#------------------------------------------------
+#משווה בין שתי הרצפים (הישן והחדש אחרי מוטציות) ומוצאת איפה שמור ואיפה לא
+#לא נכון עד הסוף צריך לסיים אותה!!!
+def compre(original_str, mutation_str):
+    is_conserved_list = []
+    if original_str % 10 != 0:
+        left_region = original_str - (original_str % 10)
+
+        for i in range(0, (original_str - left_region), 10):
+            for h in range(10):
+                original_sum = 0
+                original_sum = original_sum + original_str[h]
+
+                mutation_sum = 0
+                mutation_sum = mutation_sum + mutation_str[h]
+
+            if max(original_sum, mutation_sum) - min(original_sum, mutation_sum) <= 5:
+                is_conserved_list.append("saved")
+            else:
+                is_conserved_list.append("not saved")
+
+    if original_str % 10 != 0:
+        for i in range((original_str - left_region), original_str):
+            for h in range(10):
+                original_sum = 0
+                original_sum = original_sum + original_str[h]
+
+                mutation_sum = 0
+                mutation_sum = mutation_sum + mutation_str[h]
+
+        if max(original_sum, mutation_sum) - min(original_sum, mutation_sum) <= 5:
+            is_conserved_list.append("saved")
+        else:   
+            is_conserved_list.append("not saved")
+
+    return is_conserved_list    
+
+def Mutate_protein(seq):
+  '''
+  '''
+  amini_acids_list = ['F', 'S', 'Y', 'C', 'L', '*', 'W',
+                    'P', 'H', 'R', 'Q',
+                    'I', 'T', 'N', 'K', 'M',
+                    'V', 'A', 'D', 'G', 'E']
+
+  rand_acid = random.choice(amini_acids_list)
+  rand_num = random.randrange(0,len(seq))
+ 
+  if seq[rand_num] != rand_acid:
+    change_protein = seq[0:rand_num]+ rand_acid + seq[(rand_num+1):]
+ 
+  else:
+    amini_acids_list.remove(rand_acid)
+    rand_acid = random.choice(amini_acids_list)
+    change_protein = seq[0:rand_num]+ rand_acid + seq[(rand_num+1):]
+  return change_protein
+#------------------------------------------------
+#תוכנית ראשית#
 
 
