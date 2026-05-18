@@ -10,7 +10,7 @@ def is_conserved(amino_list):
     #מיפוי תכונות של חומצות אמינו
     amino_groups = [['R','H','K'],['D','E'],['S', 'T', 'N', 'Q'],['P', 'C', 'G'],['A', 'V', 'I','L', 'M', 'F','Y', 'W']]
     
-    counter_list = [0, 0, 0, 0, 0, 0]
+    counter_list = [0, 0, 0, 0, 0]
     
 
     """
