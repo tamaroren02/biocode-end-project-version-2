@@ -43,32 +43,32 @@ def is_conserved(amino_list):
 
 #משווה בין שתי הרצפים (הישן והחדש אחרי מוטציות) ומוצאת איפה שמור ואיפה לא
 #לא נכון עד הסוף צריך לסיים אותה!!!
-def compre(original_str, mutation_str):
+def compre(original_list, mutation_list):
     is_conserved_list = []
-    if original_str % 10 != 0:
-        left_region = original_str - (original_str % 10)
+    if original_list % 10 != 0:
+        left_region = original_list - (original_list % 10)
 
-        for i in range(0, (original_str - left_region), 10):
+        for i in range(0, (original_list - left_region), 10):
             for h in range(10):
                 original_sum = 0
-                original_sum = original_sum + original_str[h]
+                original_sum = original_sum + original_list[h]
 
                 mutation_sum = 0
-                mutation_sum = mutation_sum + mutation_str[h]
+                mutation_sum = mutation_sum + mutation_list[h]
 
             if max(original_sum, mutation_sum) - min(original_sum, mutation_sum) <= 5:
                 is_conserved_list.append("saved")
             else:
                 is_conserved_list.append("not saved")
 
-    if original_str % 10 != 0:
-        for i in range((original_str - left_region), original_str):
+    if original_list % 10 != 0:
+        for i in range((original_list - left_region), original_list):
             for h in range(10):
                 original_sum = 0
-                original_sum = original_sum + original_str[h]
+                original_sum = original_sum + original_list[h]
 
                 mutation_sum = 0
-                mutation_sum = mutation_sum + mutation_str[h]
+                mutation_sum = mutation_sum + mutation_list[h]
 
         if max(original_sum, mutation_sum) - min(original_sum, mutation_sum) <= 5:
             is_conserved_list.append("saved")
