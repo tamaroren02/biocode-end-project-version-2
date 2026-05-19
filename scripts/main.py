@@ -8,11 +8,11 @@ def seq_to_string(seq):#הופך את הליסט לסטרינג
 
 def is_conserved(amino_list):
     #מיפוי תכונות של חומצות אמינו
-    amino_groups = [['R','H','K'],['D','E'],['S', 'T', 'N', 'Q'],['P', 'C', 'G'],['A', 'V', 'I','L', 'M', 'F','Y', 'W']]
+    amino_groups = [['R','H','K'],['D','E'],['S', 'T', 'N', 'Q'],
+                    ['P', 'C', 'G'],['A', 'V', 'I','L', 'M', 'F','Y', 'W']]
     
     counter_list = [0, 0, 0, 0, 0]
     
-
     """
     #1
     Electric_charged_sidechains_P = ['R','H','K']
@@ -100,5 +100,33 @@ def Mutate_protein(seq):#מקבלת רצף חומצות אמינו של חיה �
 
 
 #תוכנית ראשית#
+# פתיחת הקבצים
+GAPDH_file = open('data/GAPDH_MSA.fasta', 'r')
+print("הקובץ נפתח")
+RBP1_file = open('data/RBP1_MSA.fasta', 'r')
+
+#הגדרת שתי רשימות המכילות את רצפי החלבונים שבקצים, כל רשימה מייצגת קובץ אחר.
+GAPDH_list = []
+RBP1_list = []
+
+curr_seq = ""
+
+for line in GAPDH_file:
+    line = line.rstrip('\r\n')
+
+    # רצף החומצות אמינו מופיע בשורות שאינן מתחילות בסימן "<" לכן "נדלג" על שורה זו
+    if line == "" or line[0] == ">":
+        if curr_seq != "":
+            GAPDH_list.append(curr_seq)
+        curr_seq = ""
+
+    else:
+        curr_seq += line
+
+if curr_seq != "":
+    GAPDH_list.append(curr_seq)
+
+print (GAPDH_list[0])
+
 
 
