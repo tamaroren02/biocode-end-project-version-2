@@ -117,7 +117,14 @@ def file_to_list(file):
         seq_list.append(curr_seq)
     
     return seq_list
-
+#------------------------------------------------
+def conserved_list(seq_str):
+    one_zero_list=[]
+    seq_length=len(seq_str)
+    for i in range (seq_length):
+        x=is_conserved(seq_str)
+        one_zero_list.append(x)
+    return one_zero_list
 
 #תוכנית ראשית#
 # פתיחת הקבצים
@@ -130,6 +137,4 @@ RBP1_list = []
 
 GAPDH_list = file_to_list(GAPDH_file)
 RBP1_list = file_to_list(RBP1_file)
-
-
 
