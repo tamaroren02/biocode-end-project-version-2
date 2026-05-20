@@ -45,10 +45,10 @@ def is_conserved(amino_list):
 #לא נכון עד הסוף צריך לסיים אותה!!!
 def compre(original_list, mutation_list):
     is_conserved_list = []
-    if original_list % 10 != 0:
-        left_region = original_list - (original_list % 10)
+    if len(original_list) % 10 != 0:
+        left_region = len(original_list) - (len(original_list) % 10)
 
-        for i in range(0, (original_list - left_region), 10):
+        for i in range(0, (len(original_list) - left_region), 10):
             for h in range(10):
                 original_sum = 0
                 original_sum = original_sum + original_list[h]
@@ -61,8 +61,8 @@ def compre(original_list, mutation_list):
             else:
                 is_conserved_list.append("not saved")
 
-    if original_list % 10 != 0:
-        for i in range((original_list - left_region), original_list):
+    if len(original_list) % 10 != 0:
+        for i in range((len(original_list) - left_region), len(original_list)):
             for h in range(10):
                 original_sum = 0
                 original_sum = original_sum + original_list[h]
@@ -166,5 +166,5 @@ def ustage_conserved_list(organizam_list):
 print(ustage_conserved_list(mutated_GAPDH_list))"""
 
 #שימוש בפונקציה compare שמשווה בין שתי הגרסאות של הרצפים
-comapred_GAPDH_list=compre(GAPDH_list, mutated_GAPDH_list)
-comapred_RBP1_list=compre(RBP1_list, mutated_RBP1_list)
+#comapred_GAPDH_list=compre(GAPDH_list, mutated_GAPDH_list)
+#comapred_RBP1_list=compre(RBP1_list, mutated_RBP1_list)
