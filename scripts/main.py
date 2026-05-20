@@ -147,8 +147,11 @@ RBP1_file = open('data/RBP1_MSA.fasta', 'r')
 GAPDH_list = []
 RBP1_list = []
 
+#ליסט של שתי הקבצים במקום קובץ
 GAPDH_list = file_to_list(GAPDH_file)
 RBP1_list = file_to_list(RBP1_file)
 
-
+#העברת כל אחד מהרצפים בקבצים 70 מוטציות
+mutated_GAPDH_list =mutate_ustage(GAPDH_list)
+mutated_RBP1_list=mutate_ustage(RBP1_list)
 
