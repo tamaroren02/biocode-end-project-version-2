@@ -126,6 +126,18 @@ def conserved_list(seq_str):
         one_zero_list.append(x)
     return one_zero_list
 
+#------------------------------------------------
+def mutate_ustage(organizim_list):# מעביר את הרצף 70 מוטציות ושומר את זה במשתנה חדש
+    mutated_list=[]
+    for seq in organizim_list:
+        mutated_seq=seq
+        for i in range (70):
+            mutated_seq=Mutate_protein(mutated_seq)
+        mutated_list.append(mutated_seq)
+    return mutated_list 
+
+#------------------------------------------------
+
 #תוכנית ראשית#
 # פתיחת הקבצים
 GAPDH_file = open('data/GAPDH_MSA.fasta', 'r')
@@ -137,4 +149,6 @@ RBP1_list = []
 
 GAPDH_list = file_to_list(GAPDH_file)
 RBP1_list = file_to_list(RBP1_file)
+
+
 
