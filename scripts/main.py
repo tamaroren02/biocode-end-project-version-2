@@ -154,4 +154,17 @@ RBP1_list = file_to_list(RBP1_file)
 #העברת כל אחד מהרצפים בקבצים 70 מוטציות
 mutated_GAPDH_list =mutate_ustage(GAPDH_list)
 mutated_RBP1_list=mutate_ustage(RBP1_list)
+"""
+def ustage_conserved_list(organizam_list):
+    for seq in organizam_list:
+        list_organizem_concerved=[]
+        str_seq=seq_to_string(seq)
+        yes_or_not_conserved=conserved_list(str_seq)
+        list_organizem_concerved.append(yes_or_not_conserved)
+    return list_organizem_concerved
 
+print(ustage_conserved_list(mutated_GAPDH_list))"""
+
+#שימוש בפונקציה compare שמשווה בין שתי הגרסאות של הרצפים
+comapred_GAPDH_list=compre(GAPDH_list, mutated_GAPDH_list)
+comapred_RBP1_list=compre(RBP1_list, mutated_RBP1_list)
