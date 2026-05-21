@@ -137,7 +137,18 @@ def mutate_ustage(organizim_list):# מעביר את הרצף 70 מוטציות �
     return mutated_list 
 
 #------------------------------------------------
-
+def conserved_list(organizm_list):#שימוש של ה פונקציה של conserved
+    place_number=[]
+    is_conserved_all_organizams=[]
+    counter=0
+    seq_length=len(organizm_list[0])
+    for h in range(seq_length):
+        for i in range(8):
+            x=organizm_list[i][h]
+            place_number.append(x)
+        is_conserved_all_organizams.append(is_conserved(place_number))
+    return is_conserved_all_organizams
+#------------------------------------------------
 #תוכנית ראשית#
 # פתיחת הקבצים
 GAPDH_file = open('data/GAPDH_MSA.fasta', 'r')
@@ -170,6 +181,12 @@ print(ustage_conserved_list(mutated_GAPDH_list))
 
 
 
+GAPDH_list_conserved=conserved_list(GAPDH_list)
+mutated_GAPDH_list_conserved=conserved_list(mutated_GAPDH_list)
+RBP1_list_conserved=conserved_list(RBP1_list)
+mutated_RBP1_list_conserved=conserved_list(mutated_RBP1_list)
+
+
 #שימוש בפונקציה compare שמשווה בין שתי הגרסאות של הרצפים
-#comapred_GAPDH_list=compre(GAPDH_list, mutated_GAPDH_list)
-#comapred_RBP1_list=compre(RBP1_list, mutated_RBP1_list)
+comapred_GAPDH_list=compre(GAPDH_list_conserved, mutated_GAPDH_list_conserved)
+comapred_RBP1_list=compre(RBP1_list_conserved, mutated_RBP1_list_conserved)
