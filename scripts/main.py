@@ -64,72 +64,38 @@ def max_seq (zero_or_one, list):
 
 #------------------------------------------------
 
-#משווה בין שתי הרצפים (הישן והחדש אחרי מוטציות) ומוצאת איפה שמור ואיפה לא
-#לא נכון עד הסוף צריך לסיים אותה!!!
-def compare(zero_and_one_list):
-    conserved_seq = ""
-    non_conserved_seq = ""
-    
-
-
-
-
-
-    '''is_conserved_list = []
-    if len(original_list) % 10 != 0:
-        left_region = len(original_list) - (len(original_list) % 10)
-
-        for i in range(0, (len(original_list) - left_region), 10):
-            original_sum = 0
-            mutation_sum = 0
-            for h in range(10):
-                
-                original_sum = original_sum + original_list[h]
-
-                
-                mutation_sum = mutation_sum + mutation_list[h]
-
-            if max(original_sum, mutation_sum) - min(original_sum, mutation_sum) <= 5:
-                is_conserved_list.append("saved")
-            else:
-                is_conserved_list.append("not saved")
-
-    if len(original_list) % 10 != 0:
-        for i in range((len(original_list) - left_region), len(original_list)):
-            original_sum = 0
-            mutation_sum = 0
-            for h in range(10):
-                
-                original_sum = original_sum + original_list[h]
-
-                
-                mutation_sum = mutation_sum + mutation_list[h]
-
-        if max(original_sum, mutation_sum) - min(original_sum, mutation_sum) <= 5:
-            is_conserved_list.append("saved")
-        else:   
-            is_conserved_list.append("not saved")
-
-    return is_conserved_list    '''
 #------------------------------------------------
-def Mutate_protein(seq):#מקבלת רצף חומצות אמינו של חיה ומחזירה את אותו רצף רק עם מוטצות נוקדתיות של החלפה
-  '''
-  '''
-  amini_acids_list = ['F', 'S', 'Y', 'C', 'L', '*', 'W',
-                    'P', 'H', 'R', 'Q',
-                    'I', 'T', 'N', 'K', 'M',
-                    'V', 'A', 'D', 'G', 'E']
+def compare(zero_and_one_list, animle_list):
+    len_conserved, start1, stop1 = max_seq(zero_and_one_list, 1)
+    conserved_seq_original = animle_list[start1: stop1]
+    num_mutation1 = int(len_conserved * 0.2)
+    conserved_seq_mutated = Mutate_protein(conserved_seq_original, num_mutation1)
 
-  rand_acid = random.choice(amini_acids_list)
-  rand_num = random.randrange(0,len(seq))
- 
-  if seq[rand_num] != rand_acid:
-    change_protein = seq[0:rand_num]+ rand_acid + seq[(rand_num+1):]
- 
-  else:
-    amini_acids_list.remove(rand_acid)
+
+    len_non_conserved, start0, stop0 = max_seq(zero_and_one_list, 0)
+    non_conserved_seq_original = animle_list[start0: stop0]
+    num_mutation0 = int(len_non_conserved * 0.2)
+    non_conserved_seq_mutated = Mutate_protein(non_conserved_seq_original, num_mutation0)
+#------------------------------------------------
+def Mutate_protein(seq, num_mutation):#מקבלת רצף חומצות אמינו של חיה ומחזירה את אותו רצף רק עם מוטצות נוקדתיות של החלפה
+  '''
+  '''
+  for i in range(num_mutation):
+    amini_acids_list = ['F', 'S', 'Y', 'C', 'L', '*', 'W',
+                        'P', 'H', 'R', 'Q',
+                        'I', 'T', 'N', 'K', 'M',
+                        'V', 'A', 'D', 'G', 'E']
+
     rand_acid = random.choice(amini_acids_list)
-    change_protein = seq[0:rand_num]+ rand_acid + seq[(rand_num+1):]
+    rand_num = random.randrange(0,len(seq))
+    
+    if seq[rand_num] != rand_acid:
+        change_protein = seq[0:rand_num]+ rand_acid + seq[(rand_num+1):]
+    
+    else:
+        amini_acids_list.remove(rand_acid)
+        rand_acid = random.choice(amini_acids_list)
+        change_protein = seq[0:rand_num]+ rand_acid + seq[(rand_num+1):]
   return change_protein
 #------------------------------------------------
 def file_to_list(file):
