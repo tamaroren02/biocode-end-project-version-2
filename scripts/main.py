@@ -63,19 +63,59 @@ def max_seq (zero_or_one, list):
     return max_len, start, stop
 
 #------------------------------------------------
+def amino_acid_groups(original_seq, mutated_seq):
+    #מיפוי תכונות של חומצות אמינו
+    groups = [['R','H','K'],['D','E'],['S', 'T', 'N', 'Q'],
+                    ['P', 'C', 'G'],['A', 'V', 'I','L', 'M', 'F','Y', 'W']]
+    """
+    #1
+    Electric_charged_sidechains_P = ['R','H','K']
+    #2
+    Electric_charged_sidechains_N = ['D','E']
+    #3
+    Electric_polar_uncharged_sidechains = ['S', 'T', 'N', 'Q']
+    #4
+    special_cases = ['P', 'C', 'G']
+    #5
+    Hydrophobic_sidechains = ['A', 'V', 'I','L', 'M', 'F','Y', 'W']
+    """
+    cnt = 0
+
+    for i in range(len(original_seq)):
+        if original_seq[i] != mutated_seq[i]:
+            for j in range(groups):
+                if mutated_seq[i] in groups[j] and original_seq[i] in groups[j]:
+                    cnt += 1
+    return cnt
 
 #------------------------------------------------
 def compare(zero_and_one_list, animle_list):
+    conserved_cnt = 0
     len_conserved, start1, stop1 = max_seq(zero_and_one_list, 1)
     conserved_seq_original = animle_list[start1: stop1]
     num_mutation1 = int(len_conserved * 0.2)
     conserved_seq_mutated = Mutate_protein(conserved_seq_original, num_mutation1)
+    
+    
+    conserved_cnt = amino_acid_groups(conserved_seq_original, conserved_seq_mutated) == False
+            
+    # חישוב בכמה אחוזים הרצף ישתנה
+    conserved_percentage = 100 * (len_conserved / conserved_cnt)
 
-
+    non_conserved_cnt = 0
     len_non_conserved, start0, stop0 = max_seq(zero_and_one_list, 0)
     non_conserved_seq_original = animle_list[start0: stop0]
     num_mutation0 = int(len_non_conserved * 0.2)
     non_conserved_seq_mutated = Mutate_protein(non_conserved_seq_original, num_mutation0)
+
+    
+    non_conserved_cnt = amino_acid_groups(non_conserved_seq_original, non_conserved_seq_mutated) == False
+            
+    # חישוב בכמה אחוזים הרצף ישתנה
+    non_conserved_percentage = 100 * (len_non_conserved / non_conserved_cnt)
+
+    return conserved_percentage, non_conserved_percentage
+
 #------------------------------------------------
 def Mutate_protein(seq, num_mutation):#מקבלת רצף חומצות אמינו של חיה ומחזירה את אותו רצף רק עם מוטצות נוקדתיות של החלפה
   '''
@@ -96,6 +136,7 @@ def Mutate_protein(seq, num_mutation):#מקבלת רצף חומצות אמינו
         amini_acids_list.remove(rand_acid)
         rand_acid = random.choice(amini_acids_list)
         change_protein = seq[0:rand_num]+ rand_acid + seq[(rand_num+1):]
+
   return change_protein
 #------------------------------------------------
 def file_to_list(file):
