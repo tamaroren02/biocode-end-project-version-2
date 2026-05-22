@@ -36,15 +36,46 @@ def is_conserved(amino_acid_list):
     else:
         return 0
         
-        
+#------------------------------------------------
+def max_seq (zero_or_one, list):
+    max_len = 0
+    start = -1
+    stop = -1
+
+    i = 0
+    while i < len(list):
+        if list[i] == zero_or_one:
+            temp_start = i
+            cnt  = 0
             
+            while i < len(list) and list[i] and list[i] == zero_or_one:
+                cnt += 1
+                i += 1
+
+            if cnt > max_len:
+                max_len = cnt
+                start = temp_start
+                stop = i - 1
+        else:
+            i += 1
+
+
+    return max_len, start, stop
 
 #------------------------------------------------
 
 #משווה בין שתי הרצפים (הישן והחדש אחרי מוטציות) ומוצאת איפה שמור ואיפה לא
 #לא נכון עד הסוף צריך לסיים אותה!!!
-def compre(original_list, mutation_list):
-    is_conserved_list = []
+def compare(zero_and_one_list):
+    conserved_seq = ""
+    non_conserved_seq = ""
+    
+
+
+
+
+
+    '''is_conserved_list = []
     if len(original_list) % 10 != 0:
         left_region = len(original_list) - (len(original_list) % 10)
 
@@ -79,7 +110,7 @@ def compre(original_list, mutation_list):
         else:   
             is_conserved_list.append("not saved")
 
-    return is_conserved_list    
+    return is_conserved_list    '''
 #------------------------------------------------
 def Mutate_protein(seq):#מקבלת רצף חומצות אמינו של חיה ומחזירה את אותו רצף רק עם מוטצות נוקדתיות של החלפה
   '''
@@ -192,5 +223,13 @@ mutated_RBP1_list_conserved=conserved_list(mutated_RBP1_list)
 
 
 #שימוש בפונקציה compare שמשווה בין שתי הגרסאות של הרצפים
-comapred_GAPDH_list=compre(GAPDH_list_conserved, mutated_GAPDH_list_conserved)
-comapred_RBP1_list=compre(RBP1_list_conserved, mutated_RBP1_list_conserved)
+comapred_GAPDH_list=compare(GAPDH_list_conserved, mutated_GAPDH_list_conserved)
+comapred_RBP1_list=compare(RBP1_list_conserved, mutated_RBP1_list_conserved)
+
+
+
+x = [0,0,0,1,0,1,1,1,0,1,1,1,1,1,1]
+max, sta, sto = max_seq(1, x)
+print(max)
+print(sta)
+print(sto)
