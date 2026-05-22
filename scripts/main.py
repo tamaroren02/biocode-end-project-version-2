@@ -6,12 +6,12 @@ def seq_to_string(seq):#הופך את הליסט לסטרינג
     return seq_string
 #------------------------------------------------
 
-def is_conserved(amino_list):
+def is_conserved(amino_acid_list):
     #מיפוי תכונות של חומצות אמינו
-    amino_groups = [['R','H','K'],['D','E'],['S', 'T', 'N', 'Q'],
-                    ['P', 'C', 'G'],['A', 'V', 'I','L', 'M', 'F','Y', 'W']]
+    #amino_groups = [['R','H','K'],['D','E'],['S', 'T', 'N', 'Q'],
+    #                ['P', 'C', 'G'],['A', 'V', 'I','L', 'M', 'F','Y', 'W']]
     
-    counter_list = [0, 0, 0, 0, 0]
+    #counter_list = [0, 0, 0, 0, 0]
     
     """
     #1
@@ -25,19 +25,19 @@ def is_conserved(amino_list):
     #5
     Hydrophobic_sidechains = ['A', 'V', 'I','L', 'M', 'F','Y', 'W']
     """
-    #מחזירה 0/1 (שמור או לא שמור)
-    for i in range(len(amino_list)):
-        curr_acid = amino_list[i]
+    
+    cnt = 0
+    for i in range(amino_acid_list):
+        if amino_acid_list[i] == "-":
+            cnt += 1
 
-        for h in range(len(amino_groups)):
-            for j in range(len(amino_groups[h])):
-                if curr_acid == amino_groups[h][j]:
-                    counter_list[h] += 1
-
-    for i in range(len(counter_list)):
-        if counter_list[i] >= 4:
-            return 1
-    return 0   
+    if (len(set(amino_acid_list)) <= 2 or cnt <=3):
+        return 1
+    else:
+        return 0
+        
+        
+            
 
 #------------------------------------------------
 
@@ -49,11 +49,13 @@ def compre(original_list, mutation_list):
         left_region = len(original_list) - (len(original_list) % 10)
 
         for i in range(0, (len(original_list) - left_region), 10):
+            original_sum = 0
+            mutation_sum = 0
             for h in range(10):
-                original_sum = 0
+                
                 original_sum = original_sum + original_list[h]
 
-                mutation_sum = 0
+                
                 mutation_sum = mutation_sum + mutation_list[h]
 
             if max(original_sum, mutation_sum) - min(original_sum, mutation_sum) <= 5:
@@ -63,11 +65,13 @@ def compre(original_list, mutation_list):
 
     if len(original_list) % 10 != 0:
         for i in range((len(original_list) - left_region), len(original_list)):
+            original_sum = 0
+            mutation_sum = 0
             for h in range(10):
-                original_sum = 0
+                
                 original_sum = original_sum + original_list[h]
 
-                mutation_sum = 0
+                
                 mutation_sum = mutation_sum + mutation_list[h]
 
         if max(original_sum, mutation_sum) - min(original_sum, mutation_sum) <= 5:
