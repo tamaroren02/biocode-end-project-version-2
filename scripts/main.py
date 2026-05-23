@@ -1,10 +1,5 @@
 import random
 #פונקציות#
-#------------------------------------------------
-def seq_to_string(seq):#הופך את הליסט לסטרינג
-    seq_string = "".join(seq)
-    return seq_string
-#------------------------------------------------
 
 def is_conserved(amino_acid_list):
     cnt = 0
@@ -32,7 +27,7 @@ def max_seq (zero_or_one, list):
             temp_start = i
             cnt  = 0
             
-            while i < len(list) and list[i] and list[i] == zero_or_one:
+            while i < len(list) and list[i] == zero_or_one:
                 cnt += 1
                 i += 1
 
@@ -174,36 +169,6 @@ def position(protein_list):
 
 #------------------------------------------------
 
-def conserved_list(seq_str):#
-    one_zero_list=[]
-    seq_length=len(seq_str)
-    for i in range (seq_length):
-        x=is_conserved(seq_str)
-        one_zero_list.append(x)
-    return one_zero_list
-
-#------------------------------------------------
-def mutate_ustage(organizim_list):# מעביר את הרצף 70 מוטציות ושומר את זה במשתנה חדש
-    mutated_list=[]
-    for seq in organizim_list:
-        mutated_seq=seq
-        for i in range (70):
-            mutated_seq=Mutate_protein(mutated_seq)
-        mutated_list.append(mutated_seq)
-    return mutated_list 
-
-#------------------------------------------------
-def conserved_list(organizm_list):#שימוש של ה פונקציה של conserved
-    place_number=[]
-    is_conserved_all_organizams=[]
-    counter=0
-    seq_length=len(organizm_list[0])
-    for h in range(seq_length):
-        for i in range(8):
-            x=organizm_list[i][h]
-            place_number.append(x)
-        is_conserved_all_organizams.append(is_conserved(place_number))
-    return is_conserved_all_organizams
 #------------------------------------------------
 #תוכנית ראשית#
 # פתיחת הקבצים
@@ -237,34 +202,3 @@ zero_one_RBP1_list = position(RBP1_list)
 
 
 
-
-'''#העברת כל אחד מהרצפים בקבצים 70 מוטציות
-mutated_GAPDH_list =mutate_ustage(GAPDH_list)
-mutated_RBP1_list=mutate_ustage(RBP1_list)
-'''
-
-"""
-def ustage_conserved_list(organizam_list):
-    for seq in organizam_list:
-        list_organizem_concerved=[]
-        str_seq=seq_to_string(seq)
-        yes_or_not_conserved=conserved_list(str_seq)
-        list_organizem_concerved.append(yes_or_not_conserved)
-    return list_organizem_concerved
-
-print(ustage_conserved_list(mutated_GAPDH_list))
-"""
-
-
-'''
-GAPDH_list_conserved=conserved_list(GAPDH_list)
-mutated_GAPDH_list_conserved=conserved_list(mutated_GAPDH_list)
-RBP1_list_conserved=conserved_list(RBP1_list)
-mutated_RBP1_list_conserved=conserved_list(mutated_RBP1_list)
-
-
-#שימוש בפונקציה compare שמשווה בין שתי הגרסאות של הרצפים
-comapred_GAPDH_list=compare(GAPDH_list_conserved, mutated_GAPDH_list_conserved)
-comapred_RBP1_list=compare(RBP1_list_conserved, mutated_RBP1_list_conserved)
-
-'''
