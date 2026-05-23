@@ -86,7 +86,7 @@ def Mutate_protein(seq, num_mutation):#מקבלת רצף חומצות אמינו
     #print("seq[rand_num]", seq[rand_num])
 
     while seq[rand_num] == rand_acid:
-        rand_num = random.randrange(0,len(seq))
+        rand_acid = random.choice(amino_acids_list)
     
     seq = seq[0:rand_num]+ rand_acid + seq[(rand_num+1):]
     #print("seq", seq)
@@ -110,7 +110,7 @@ def compare(zero_and_one_list, animle_list):
     if len_conserved != 0 :
         # חישוב בכמה אחוזים הרצף ישתנה
         conserved_percentage = 100 * ( conserved_cnt / len_conserved)
-    # print(conserved_percentage)
+    
     else:
         conserved_percentage = 0
 
@@ -166,11 +166,9 @@ def position(protein_list):
 
     return zero_one_list
 
-
-#------------------------------------------------
-
 #------------------------------------------------
 #תוכנית ראשית#
+
 # פתיחת הקבצים
 GAPDH_file = open('data/GAPDH_MSA.fasta', 'r')
 RBP1_file = open('data/RBP1_MSA.fasta', 'r')
@@ -186,7 +184,10 @@ GAPDH_non_conserved = 0
 GAPDH_list = file_to_list(GAPDH_file)
 zero_one_GAPDH_list = position(GAPDH_list)
 #print (zero_one_GAPDH_list)
+
+
 GAPDH_conserved, GAPDH_non_conserved = compare(zero_one_GAPDH_list, GAPDH_list[0])
+
 print("GAPDH_conserved", GAPDH_conserved)
 print("GAPDH_non_conserved", GAPDH_non_conserved)
 
@@ -194,6 +195,11 @@ print("GAPDH_non_conserved", GAPDH_non_conserved)
 RBP1_list = file_to_list(RBP1_file)
 zero_one_RBP1_list = position(RBP1_list)
 #print (zero_one_RBP1_list)
+
+RBP1_conserved, RBP1_non_conserved = compare(zero_one_RBP1_list, RBP1_list[0])
+
+print("RBP1_conserved", RBP1_conserved)
+print("RBP1_non_conserved", RBP1_non_conserved)
 
 
 
