@@ -2,6 +2,11 @@ import random
 #פונקציות#
 
 def is_conserved(amino_acid_list):
+    '''
+    הפונקציה בודקת האם מיקום בחלבון שמור/ לא שמור/ לא זה ולא זה.
+    מקבלת: amino_acid_list
+    מחזירה: 1/ 0 / '-'.
+    '''
     cnt = 0
     for i in range(len(amino_acid_list)):
         if amino_acid_list[i] == "-":
@@ -17,6 +22,11 @@ def is_conserved(amino_acid_list):
         
 #------------------------------------------------
 def max_seq (zero_or_one, list):
+    '''
+    הפונקציה מקבלת רשימה ומספר ומחזירה את אורכו הרצף הכי ארוך ברשימה, את המיקום ברשימה בו הוא מתחיל ומסתיים.
+    מקבלת: zero_or_one, list
+    מחזירה: max_len, start, stop
+    '''
     max_len = 0
     start = -1
     stop = -1
@@ -43,6 +53,9 @@ def max_seq (zero_or_one, list):
 
 #------------------------------------------------
 def amino_acid_groups(original_seq, mutated_seq):
+    '''
+    הפונקציה מקבלת רצף בצורתו המקורית ואחרי מוטציות, היא בודקת כמה שינויים יש בין שני הרצפים לפי המיפוי של החומצות אמינו לפי התכונות שלהן.
+    '''
     #מיפוי תכונות של חומצות אמינו
     groups = [['R','H','K'],['D','E'],['S', 'T', 'N', 'Q'],
                     ['P', 'C', 'G'],['A', 'V', 'I','L', 'M', 'F','Y', 'W']]
@@ -69,8 +82,11 @@ def amino_acid_groups(original_seq, mutated_seq):
 
 #------------------------------------------------
 
-def Mutate_protein(seq, num_mutation):#מקבלת רצף חומצות אמינו של חיה ומחזירה את אותו רצף רק עם מוטצות נוקדתיות של החלפה
+def Mutate_protein(seq, num_mutation):
   '''
+  הפונקציה מקבלת רצף חומצות אמינו ומספר המסמל את כמות המוטציות שהרצף שהתקבל יעבור. הפונקציה מבצעת רק מוטציות נקודתיות של החלפה.
+  מקבלת: seq, num_mutation
+  מחזירה: seq
   '''
   amino_acids_list = ['F', 'S', 'Y', 'C', 'L', '*', 'W',
                         'P', 'H', 'R', 'Q',
@@ -93,7 +109,11 @@ def Mutate_protein(seq, num_mutation):#מקבלת רצף חומצות אמינו
 
 #------------------------------------------------
 def compare(zero_and_one_list, animle_list):
-    
+    '''
+    הפונקציה מעבירה את האזור השמור והלא שמור הארוך ביותר בחלבון מסוים מוטציות ומחזירה באחוזים כמה כל אחד מהם השתנה.
+    מקבלת: zero_and_one_list, animle_list
+    מחזירה: conserved_percentage, non_conserved_percentage
+    '''
     len_conserved, start1, stop1 = max_seq(1, zero_and_one_list)
     conserved_seq_original = animle_list[start1: stop1 + 1]
 
@@ -103,7 +123,6 @@ def compare(zero_and_one_list, animle_list):
     
     conserved_cnt = amino_acid_groups(conserved_seq_original, conserved_mutated_seq)
 
-    print ("conserved_cnt", conserved_cnt)
     if len_conserved != 0 :
         # חישוב בכמה אחוזים הרצף ישתנה
         conserved_percentage = 100 * ( conserved_cnt / len_conserved)
@@ -132,6 +151,11 @@ def compare(zero_and_one_list, animle_list):
 
 #------------------------------------------------
 def file_to_list(file):
+    '''
+    הפונקציה מקבלת קובץ שבו רצפים של חומצות אמינו, מכניסה את רצפים אלו לרשימה ומחזירה את הרשימה.
+    מקבלת: file
+    מחזירה: seq_list
+    '''
     curr_seq = ""
     seq_list = []
     
@@ -152,6 +176,11 @@ def file_to_list(file):
     return seq_list
 #------------------------------------------------
 def position(protein_list):
+    '''
+    הפונקציה יוצרת רשימה של חומצות אמינו ואו '-' אשר נמצאים באותו מיקום בכל הרצפים בקובץ מסוים.
+    מקבלת: protein_list
+    מחזירה: zero_one_list
+    '''
     zero_one_list = []
     for i in range(len(protein_list[0])):
         position_list = []
@@ -169,24 +198,26 @@ def position(protein_list):
 GAPDH_file = open('data/GAPDH_MSA.fasta', 'r')
 RBP1_file = open('data/RBP1_MSA.fasta', 'r')
 
-#הגדרת שתי רשימות המכילות את רצפי החלבונים שבקצים, כל רשימה מייצגת קובץ אחר.
+#הגדרת שתי רשימות ריקות שיכילו את רצפי החלבונים שבקבצים, כל רשימה מייצגת קובץ אחר.
 GAPDH_list = []
 RBP1_list = []
+
+# הגדרת משתנים
 GAPDH_conserved = 0
 GAPDH_non_conserved = 0
 RBP1_conserved = 0
 RBP1_non_conserved = 0
 
-#ליסט של שתי הקבצים במקום קובץ
+
 GAPDH_list = file_to_list(GAPDH_file)
 zero_one_GAPDH_list = position(GAPDH_list)
 #print (zero_one_GAPDH_list)
 
-
 GAPDH_conserved, GAPDH_non_conserved = compare(zero_one_GAPDH_list, GAPDH_list[0])
 
-print("GAPDH_conserved", GAPDH_conserved)
-print("GAPDH_non_conserved", GAPDH_non_conserved)
+print("The protein: GAPDH")
+print(f"{GAPDH_conserved:.2f}% percent of the longest conserved region in the protein changed")
+print(f"{GAPDH_non_conserved:.2f}% percent of the longest non-conserved region in the protein changed\n")
 
 
 RBP1_list = file_to_list(RBP1_file)
@@ -195,8 +226,9 @@ zero_one_RBP1_list = position(RBP1_list)
 
 RBP1_conserved, RBP1_non_conserved = compare(zero_one_RBP1_list, RBP1_list[0])
 
-print("RBP1_conserved", RBP1_conserved)
-print("RBP1_non_conserved", RBP1_non_conserved)
+print("The protein: RBP1")
+print(f"{RBP1_conserved:.2f}% percent of the longest conserved region in the protein changed")
+print(f"{RBP1_non_conserved:.2f}% percent of the longest non-conserved region in the protein changed")
 
 
 
