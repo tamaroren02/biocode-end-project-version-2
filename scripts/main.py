@@ -81,15 +81,13 @@ def Mutate_protein(seq, num_mutation):#מקבלת רצף חומצות אמינו
     
     
     rand_acid = random.choice(amino_acids_list)
-    #print("rand_acid", rand_acid)
+    
     rand_num = random.randrange(0,len(seq))
-    #print("seq[rand_num]", seq[rand_num])
-
+    
     while seq[rand_num] == rand_acid:
         rand_acid = random.choice(amino_acids_list)
     
     seq = seq[0:rand_num]+ rand_acid + seq[(rand_num+1):]
-    #print("seq", seq)
     
   return seq
 
@@ -99,7 +97,6 @@ def compare(zero_and_one_list, animle_list):
     len_conserved, start1, stop1 = max_seq(1, zero_and_one_list)
     conserved_seq_original = animle_list[start1: stop1 + 1]
 
-    #print("conserved_seq_original", conserved_seq_original)
 
     num_mutation1 = int(len_conserved * 0.2)
     conserved_mutated_seq = Mutate_protein(conserved_seq_original, num_mutation1)
@@ -141,7 +138,6 @@ def file_to_list(file):
     for line in file:
         line = line.rstrip('\r\n')
 
-        # רצף החומצות אמינו מופיע בשורות שאינן מתחילות בסימן "<" לכן "נדלג" על שורה זו
         if line == "" or line[0] == ">":
             if curr_seq != "":
                 seq_list.append(curr_seq)
@@ -178,7 +174,8 @@ GAPDH_list = []
 RBP1_list = []
 GAPDH_conserved = 0
 GAPDH_non_conserved = 0
-
+RBP1_conserved = 0
+RBP1_non_conserved = 0
 
 #ליסט של שתי הקבצים במקום קובץ
 GAPDH_list = file_to_list(GAPDH_file)
