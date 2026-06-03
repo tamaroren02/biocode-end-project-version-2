@@ -1,6 +1,6 @@
 import random
 #פונקציות#
-
+"""
 def is_conserved(amino_acid_list):
     '''
     הפונקציה בודקת האם מיקום בחלבון שמור/ לא שמור/ לא זה ולא זה.
@@ -19,7 +19,39 @@ def is_conserved(amino_acid_list):
         return 1
     else:
         return 0
-        
+"""
+def is_conserved(amino_acid_list):
+    '''
+    הפונקציה בודקת האם מיקום בחלבון שמור/ לא שמור/ לא זה ולא זה.
+    מקבלת: amino_acid_list
+    מחזירה: 1/ 0 / '-'.
+    '''
+    cnt = 0
+    cnt_dict ={}
+    for i in range(len(amino_acid_list)):
+        if amino_acid_list[i] == "-":
+            cnt += 1
+        else:   
+            if i in cnt_dict:
+                cnt_dict[i] += 1
+            else:
+                cnt_dict[i] = 1
+
+    if cnt >= 3:
+        return '-'
+
+    if len(cnt_dict) <= 2:
+        max_value = max(cnt_dict.values())
+        fraction= max_value/8
+        if fraction>0.75:
+            return 1
+        else:
+            return 0
+    else:
+        return 0
+
+
+
 #------------------------------------------------
 def max_seq (zero_or_one, list):
     '''
