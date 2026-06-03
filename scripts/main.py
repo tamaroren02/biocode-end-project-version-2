@@ -50,8 +50,6 @@ def is_conserved(amino_acid_list):
     else:
         return 0
 
-
-
 #------------------------------------------------
 def max_seq (zero_or_one, list):
     '''
