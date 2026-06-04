@@ -206,6 +206,26 @@ def position(protein_list):
 
     return zero_one_list
 
+def seq_lengths(seq_list,organism_file,file_for_results):
+    #מקבלת את הליסט של האורגניזמים, הקובץ,ואת הקובץ שרושמים אליו את התשובות הסופיות
+    #הפונקציה מוצאת את אורך כל אחד מהאורגניזמים ומכניסה לקובץ התוצאות הסופיות את השם של האורגניזם ומה האורך שלו
+    organism_file.seek(0)
+    seq_lengths_list = []
+    organism_names_list = []
+
+    for seq in seq_list:
+        seq_lengths_list.append(len(seq))
+    
+    for line in organism_file:
+        name=line
+        if line.startswith(">"):
+            organism_name = line[1:line.find("_")]
+            organism_names_list.append(organism_name)
+
+    print(len(organism_names_list))
+    print(len(seq_lengths_list))
+    for i in range(8):
+        file_for_results.write(f"{organism_names_list[i]} length={seq_lengths_list[i]}\n")
 #------------------------------------------------
 #תוכנית ראשית#
 
@@ -252,15 +272,20 @@ results_file.write("Results:\n")
 results_file.write("\n")
 
 #אחוזי השינוי בחלק הכי ארוך השמור והלא שמור#
+results_file.write("GAPDH:\n")
 results_file.write(f"{GAPDH_conserved:.2f}% percent of the longest conserved region in the protein changed\n")
 results_file.write(f"{GAPDH_non_conserved:.2f}% percent of the longest non-conserved region in the protein changed\n")
-results_file.write("\n")
+results_file.write("RBP1:\n")
 results_file.write(f"{RBP1_conserved:.2f}% percent of the longest conserved region in the protein changed\n")
 results_file.write(f"{RBP1_non_conserved:.2f}% percent of the longest non-conserved region in the protein changed\n")
 
 max_GAPDH,start_GAPDH,end_GAPDH=max_seq (zero_one_GAPDH_list, GAPDH_list)
 max_RBP1,start_RBP1,end_RBP1=max_seq (zero_one_RBP1_list, RBP1_list)
 
-results_file.write(f"GAPDH longest conserved sequence length={max_GAPDH}\n")
 results_file.write("\n")
+results_file.write("\n")
+results_file.write(f"GAPDH longest conserved sequence length={max_GAPDH}\n")
 results_file.write(f"RBP1 longest conserved sequence length={max_RBP1}\n")
+
+
+
