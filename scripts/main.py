@@ -241,15 +241,17 @@ def disqualified_columns(seq_list):
             else:
                 continue
     disqualified_columns_precentage= (disqualified_columns_cnt/total_amount_amino_acids)*100
-    return disqualified_columns_precentage
+    return disqualified_columns_precentage,disqualified_columns_cnt
 #------------------------------------------------
 def writing_to_file_per_org(seq_list,organism_file,file_for_results):
 #כותב לתוך הקובץ את השם של כל חיה : מה האורך שלה וכמה עמודות פסלנו בה
     organism_names_list,seq_lengths_list=seq_lengths(seq_list,organism_file,file_for_results)
     for i in range(8):
+        disqualified_columns_precentage,disqualified_columns_cnt=disqualified_columns(seq_list[i])
         file_for_results.write(f"{organism_names_list[i]}:\n")
         file_for_results.write(f"length={seq_lengths_list[i]}\n")
-        file_for_results.write(f"precentage of disqualified coulcolumns in {disqualified_columns(seq_list[i]):.2f}%\n")
+        file_for_results.write(f"amount of disqualified coulcolumns= {disqualified_columns_cnt}\n")
+        file_for_results.write(f"precentage of disqualified coulcolumns= {disqualified_columns_precentage:.2f}%\n")
 #------------------------------------------------
 #תוכנית ראשית#
 
