@@ -245,7 +245,8 @@ print("The protein: RBP1")
 print(f"{RBP1_conserved:.2f}% percent of the longest conserved region in the protein changed")
 print(f"{RBP1_non_conserved:.2f}% percent of the longest non-conserved region in the protein changed")
 
-
+#🥳🥳תוצאות סופיות🥳🥳#
+results_file=open('results/results_file', 'w')
 
 
 
