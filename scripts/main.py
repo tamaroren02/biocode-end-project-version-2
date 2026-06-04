@@ -254,6 +254,14 @@ def writing_to_file_per_org(seq_list,organism_file,file_for_results):
         file_for_results.write(f"amount of disqualified coulcolumns= {disqualified_columns_cnt}\n")
         file_for_results.write(f"precentage of disqualified coulcolumns= {disqualified_columns_precentage:.2f}%\n")
 #------------------------------------------------
+def graph_changes (zero_and_one_list, organism_list,graph_file):
+    #קבצים שנכניס לאקסל ונעשה גרפים#
+    #אחוזים של שמור ולא שמור#
+    for i in range(15):  
+        zero_one_list = position(organism_list)
+        conserved, non_conserved, conserved_amount= compare(zero_and_one_list,organism_list[0])
+        graph_file.write(f"{conserved:.2f}% {non_conserved:.2f}%\n")
+#------------------------------------------------
 #תוכנית ראשית#
 
 # פתיחת הקבצים
@@ -317,3 +325,10 @@ results_file.write("\n")
 RBP1_data=writing_to_file_per_org(RBP1_list,RBP1_file,results_file)
 GAPDH_data=writing_to_file_per_org(GAPDH_list,GAPDH_file,results_file)
 
+#קבצים שנכניס לאקסל ונעשה גרפים#
+#אחוזים של שמור ולא שמור#
+GAPDH_graph_file=open('results/GAPDH_graph', 'w')
+RBP1_graph_file=open('results/RBP1_graph', 'w')
+
+GAPDH_graph_changes=graph_changes (zero_one_GAPDH_list, GAPDH_list,GAPDH_graph_file)
+RBP1_graph_changes=graph_changes (zero_one_RBP1_list, RBP1_list,RBP1_graph_file)
