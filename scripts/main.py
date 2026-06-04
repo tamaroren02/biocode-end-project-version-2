@@ -9,18 +9,20 @@ def is_conserved(amino_acid_list):
     cnt = 0
     cnt_dict ={}
     for i in range(len(amino_acid_list)):
-        if amino_acid_list[i] == "-":
+        if amino_acid_list[i] == '-':
             cnt += 1
-            if "-" in cnt_dict:
-                cnt_dict["-"] += 1
+            '''if amino_acid_list[i] in cnt_dict:
+                cnt_dict[amino_acid_list[i]] += 1
             else:
-                cnt_dict["-"] = 1
-        
+                cnt_dict[amino_acid_list[i]] = 1
+        '''
         else:   
-            if i in cnt_dict:
-                cnt_dict[i] += 1
+            if amino_acid_list[i] in cnt_dict:
+                cnt_dict[amino_acid_list[i]] += 1
             else:
-                cnt_dict[i] = 1
+                cnt_dict[amino_acid_list[i]] = 1
+
+    print("x = ", cnt_dict)
 
     if cnt >= 3:
         return '-'
@@ -203,8 +205,10 @@ def position(protein_list):
             position_list.append((protein_list[h])[i])
 
         zero_one_list.append(is_conserved(position_list))
-
+        print("i = ", i)
     return zero_one_list
+
+#------------------------------------------------
 
 def seq_lengths(seq_list,organism_file,file_for_results):
     #מקבלת את הליסט של האורגניזמים, הקובץ,ואת הקובץ שרושמים אליו את התשובות הסופיות
@@ -272,7 +276,7 @@ RBP1_non_conserved = 0
 
 GAPDH_list = file_to_list(GAPDH_file)
 zero_one_GAPDH_list = position(GAPDH_list)
-print (zero_one_GAPDH_list)
+#print (zero_one_GAPDH_list)
 
 GAPDH_conserved, GAPDH_non_conserved= compare(zero_one_GAPDH_list, GAPDH_list[0])
 
@@ -283,7 +287,7 @@ print(f"{GAPDH_non_conserved:.2f}% percent of the longest non-conserved region i
 
 RBP1_list = file_to_list(RBP1_file)
 zero_one_RBP1_list = position(RBP1_list)
-print (zero_one_RBP1_list)
+#print (zero_one_RBP1_list)
 
 RBP1_conserved, RBP1_non_conserved = compare(zero_one_RBP1_list, RBP1_list[0])
 
@@ -305,11 +309,11 @@ results_file.write(f"{RBP1_non_conserved:.2f}% percent of the longest non-conser
 #הרצף השמור הארוך ביותר#
 max_GAPDH,start_GAPDH,end_GAPDH=max_seq (zero_one_GAPDH_list, GAPDH_list)
 max_RBP1,start_RBP1,end_RBP1=max_seq (zero_one_RBP1_list, RBP1_list)
-
+'''
 print(start_GAPDH)
 print(end_RBP1)
 print(max_RBP1)
-
+'''
 results_file.write("\n")
 results_file.write(f"GAPDH longest conserved sequence length={max_GAPDH}\n")
 results_file.write(f"RBP1 longest conserved sequence length={max_RBP1}\n")
