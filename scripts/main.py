@@ -272,9 +272,9 @@ RBP1_non_conserved = 0
 
 GAPDH_list = file_to_list(GAPDH_file)
 zero_one_GAPDH_list = position(GAPDH_list)
-#print (zero_one_GAPDH_list)
+print (zero_one_GAPDH_list)
 
-GAPDH_conserved, GAPDH_non_conserved = compare(zero_one_GAPDH_list, GAPDH_list[0])
+GAPDH_conserved, GAPDH_non_conserved= compare(zero_one_GAPDH_list, GAPDH_list[0])
 
 print("The protein: GAPDH")
 print(f"{GAPDH_conserved:.2f}% percent of the longest conserved region in the protein changed")
@@ -283,7 +283,7 @@ print(f"{GAPDH_non_conserved:.2f}% percent of the longest non-conserved region i
 
 RBP1_list = file_to_list(RBP1_file)
 zero_one_RBP1_list = position(RBP1_list)
-#print (zero_one_RBP1_list)
+print (zero_one_RBP1_list)
 
 RBP1_conserved, RBP1_non_conserved = compare(zero_one_RBP1_list, RBP1_list[0])
 
@@ -306,11 +306,14 @@ results_file.write(f"{RBP1_non_conserved:.2f}% percent of the longest non-conser
 max_GAPDH,start_GAPDH,end_GAPDH=max_seq (zero_one_GAPDH_list, GAPDH_list)
 max_RBP1,start_RBP1,end_RBP1=max_seq (zero_one_RBP1_list, RBP1_list)
 
+print(start_GAPDH)
+print(end_RBP1)
+print(max_RBP1)
+
 results_file.write("\n")
 results_file.write(f"GAPDH longest conserved sequence length={max_GAPDH}\n")
 results_file.write(f"RBP1 longest conserved sequence length={max_RBP1}\n")
 results_file.write("\n")
-
 
 #השם של כל חיה ואז האורך של הרצף שלה ומה האחוז עמודות שפסלנו בה#
 RBP1_data=writing_to_file_per_org(RBP1_list,RBP1_file,results_file)
