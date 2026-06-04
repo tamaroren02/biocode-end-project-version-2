@@ -248,8 +248,14 @@ print(f"{RBP1_non_conserved:.2f}% percent of the longest non-conserved region in
 #🥳🥳תוצאות סופיות🥳🥳#
 results_file=open('results/results_file', 'w')
 
+results_file.write("Results:\n")
+results_file.write("\n")
 
-
-
+#אחוזי השינוי בחלק הכי ארוך השמור והלא שמור#
+results_file.write(f"{GAPDH_conserved:.2f}% percent of the longest conserved region in the protein changed\n")
+results_file.write(f"{GAPDH_non_conserved:.2f}% percent of the longest non-conserved region in the protein changed\n")
+results_file.write("\n")
+results_file.write(f"{RBP1_conserved:.2f}% percent of the longest conserved region in the protein changed\n")
+results_file.write(f"{RBP1_non_conserved:.2f}% percent of the longest non-conserved region in the protein changed\n")
 
 
