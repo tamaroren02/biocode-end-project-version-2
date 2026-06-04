@@ -260,7 +260,7 @@ def graph_changes (zero_and_one_list, organism_list,graph_file):
     for i in range(15):  
         zero_one_list = position(organism_list)
         conserved, non_conserved, conserved_amount= compare(zero_and_one_list,organism_list[0])
-        graph_file.write(f"{conserved:.2f}% {non_conserved:.2f}%\n")
+        graph_file.write(f"{conserved:.2f}%,{non_conserved:.2f}%\n")
 #------------------------------------------------
 #תוכנית ראשית#
 
