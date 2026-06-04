@@ -221,9 +221,35 @@ def seq_lengths(seq_list,organism_file,file_for_results):
         if line.startswith(">"):
             organism_name = line[1:line.find("_")]
             organism_names_list.append(organism_name)
-
+    return organism_names_list,seq_lengths_list
+#------------------------------------------------
+def disqualified_columns(seq_list):
+    """מקבל את הרצף של האורגניזם
+    ומחזיר מה האחוז של העמודות שפסלנו"""
+    cnt = 0
+    cnt_dict ={}
+    disqualified_columns_cnt=0
+    total_amount_amino_acids=len(seq_list)
+    for i in range(total_amount_amino_acids):
+        if seq_list[i] == "-":
+            cnt += 1
+            if "-" in cnt_dict:
+                cnt_dict["-"] += 1
+            if cnt >= 3:
+                disqualified_columns_cnt+=1
+                cnt=0
+            else:
+                continue
+    disqualified_columns_precentage= (disqualified_columns_cnt/total_amount_amino_acids)*100
+    return disqualified_columns_precentage
+#------------------------------------------------
+def writing_to_file_per_org(seq_list,organism_file,file_for_results):
+#כותב לתוך הקובץ את השם של כל חיה : מה האורך שלה וכמה עמודות פסלנו בה
+    organism_names_list,seq_lengths_list=seq_lengths(seq_list,organism_file,file_for_results)
     for i in range(8):
-        file_for_results.write(f"{organism_names_list[i]} length={seq_lengths_list[i]}\n")
+        file_for_results.write(f"{organism_names_list[i]}:\n")
+        file_for_results.write(f"length={seq_lengths_list[i]}\n")
+        file_for_results.write(f"precentage of disqualified coulcolumns in {disqualified_columns(seq_list[i]):.2f}%\n")
 #------------------------------------------------
 #תוכנית ראשית#
 
@@ -259,10 +285,6 @@ zero_one_RBP1_list = position(RBP1_list)
 
 RBP1_conserved, RBP1_non_conserved = compare(zero_one_RBP1_list, RBP1_list[0])
 
-print("The protein: RBP1")
-print(f"{RBP1_conserved:.2f}% percent of the longest conserved region in the protein changed")
-print(f"{RBP1_non_conserved:.2f}% percent of the longest non-conserved region in the protein changed")
-
 #🥳🥳תוצאות סופיות🥳🥳#
 results_file=open('results/results_file', 'w')
 
@@ -277,17 +299,18 @@ results_file.write("RBP1:\n")
 results_file.write(f"{RBP1_conserved:.2f}% percent of the longest conserved region in the protein changed\n")
 results_file.write(f"{RBP1_non_conserved:.2f}% percent of the longest non-conserved region in the protein changed\n")
 
+
+#הרצף השמור הארוך ביותר#
 max_GAPDH,start_GAPDH,end_GAPDH=max_seq (zero_one_GAPDH_list, GAPDH_list)
 max_RBP1,start_RBP1,end_RBP1=max_seq (zero_one_RBP1_list, RBP1_list)
 
-#הרצף השמור הארוך ביותר#
 results_file.write("\n")
 results_file.write(f"GAPDH longest conserved sequence length={max_GAPDH}\n")
 results_file.write(f"RBP1 longest conserved sequence length={max_RBP1}\n")
 results_file.write("\n")
 
-#אורך של כל אחד מהרצפים והשם שלהם#
-RBP1_length=seq_lengths(RBP1_list,RBP1_file,results_file)
-GAPDH_length=seq_lengths(GAPDH_list,GAPDH_file,results_file)
 
+#השם של כל חיה ואז האורך של הרצף שלה ומה האחוז עמודות שפסלנו בה#
+RBP1_data=writing_to_file_per_org(RBP1_list,RBP1_file,results_file)
+GAPDH_data=writing_to_file_per_org(GAPDH_list,GAPDH_file,results_file)
 

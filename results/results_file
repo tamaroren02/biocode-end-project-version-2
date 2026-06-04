@@ -2,27 +2,59 @@ Results:
 
 GAPDH:
 0.00% percent of the longest conserved region in the protein changed
-3.12% percent of the longest non-conserved region in the protein changed
+2.60% percent of the longest non-conserved region in the protein changed
 RBP1:
 0.00% percent of the longest conserved region in the protein changed
-2.92% percent of the longest non-conserved region in the protein changed
+3.37% percent of the longest non-conserved region in the protein changed
 
 GAPDH longest conserved sequence length=0
 RBP1 longest conserved sequence length=0
 
-Yeast length=1974
-Human length=1974
-Cow length=1974
-Mouse length=1974
-Frog length=1974
-Fish length=1974
-Fly length=1974
-Worm length=1974
-Yeast length=341
-Worm length=341
-Fly length=341
-Frog length=341
-Fish length=341
-Human length=341
-Mouse length=341
-Cow length=341
+Yeast:
+length=1974
+precentage of disqualified coulcolumns in 4.05%
+Human:
+length=1974
+precentage of disqualified coulcolumns in 0.05%
+Cow:
+length=1974
+precentage of disqualified coulcolumns in 0.05%
+Mouse:
+length=1974
+precentage of disqualified coulcolumns in 0.05%
+Frog:
+length=1974
+precentage of disqualified coulcolumns in 0.10%
+Fish:
+length=1974
+precentage of disqualified coulcolumns in 0.15%
+Fly:
+length=1974
+precentage of disqualified coulcolumns in 1.47%
+Worm:
+length=1974
+precentage of disqualified coulcolumns in 1.98%
+Yeast:
+length=341
+precentage of disqualified coulcolumns in 0.88%
+Worm:
+length=341
+precentage of disqualified coulcolumns in 0.00%
+Fly:
+length=341
+precentage of disqualified coulcolumns in 0.88%
+Frog:
+length=341
+precentage of disqualified coulcolumns in 0.59%
+Fish:
+length=341
+precentage of disqualified coulcolumns in 0.59%
+Human:
+length=341
+precentage of disqualified coulcolumns in 0.59%
+Mouse:
+length=341
+precentage of disqualified coulcolumns in 0.59%
+Cow:
+length=341
+precentage of disqualified coulcolumns in 0.59%
