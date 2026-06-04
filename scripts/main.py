@@ -27,7 +27,8 @@ def is_conserved(amino_acid_list):
 
     if len(cnt_dict) <= 2:
         max_value = max(cnt_dict.values())
-        fraction= max_value/8
+"""        x=8-cnt
+        fraction= max_value/x"""
         if fraction>=0.75:
             return 1
         else:
@@ -281,7 +282,7 @@ RBP1_non_conserved = 0
 
 GAPDH_list = file_to_list(GAPDH_file)
 zero_one_GAPDH_list = position(GAPDH_list)
-#print (zero_one_GAPDH_list)
+print ("zero_one_GAPDH_list:",zero_one_GAPDH_list)
 
 GAPDH_conserved, GAPDH_non_conserved, GAPDH_len_conserved= compare(zero_one_GAPDH_list, GAPDH_list[0])
 
@@ -292,7 +293,7 @@ print(f"{GAPDH_non_conserved:.2f}% percent of the longest non-conserved region i
 
 RBP1_list = file_to_list(RBP1_file)
 zero_one_RBP1_list = position(RBP1_list)
-#print (zero_one_RBP1_list)
+print ("zero_one_RBP1_list",zero_one_RBP1_list)
 
 RBP1_conserved, RBP1_non_conserved, RBP1_len_conserved = compare(zero_one_RBP1_list, RBP1_list[0])
 #print("RBP1_len_conserved=",RBP1_len_conserved)
