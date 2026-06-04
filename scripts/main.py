@@ -288,4 +288,6 @@ results_file.write(f"GAPDH longest conserved sequence length={max_GAPDH}\n")
 results_file.write(f"RBP1 longest conserved sequence length={max_RBP1}\n")
 
 
+RBP1_length=seq_lengths(RBP1_list,RBP1_file,results_file)
+GAPDH_length=seq_lengths(GAPDH_list,GAPDH_file,results_file)
 
