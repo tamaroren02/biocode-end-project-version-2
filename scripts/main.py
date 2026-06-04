@@ -11,18 +11,16 @@ def is_conserved(amino_acid_list):
     for i in range(len(amino_acid_list)):
         if amino_acid_list[i] == '-':
             cnt += 1
-            '''if amino_acid_list[i] in cnt_dict:
+            if amino_acid_list[i] in cnt_dict:
                 cnt_dict[amino_acid_list[i]] += 1
             else:
                 cnt_dict[amino_acid_list[i]] = 1
-        '''
+        
         else:   
             if amino_acid_list[i] in cnt_dict:
                 cnt_dict[amino_acid_list[i]] += 1
             else:
                 cnt_dict[amino_acid_list[i]] = 1
-
-    print("x = ", cnt_dict)
 
     if cnt >= 3:
         return '-'
@@ -133,7 +131,7 @@ def compare(zero_and_one_list, animle_list):
     '''
     len_conserved, start1, stop1 = max_seq(1, zero_and_one_list)
     conserved_seq_original = animle_list[start1: stop1 + 1]
-
+    print(len_conserved)
 
     num_mutation1 = int(len_conserved * 0.2)
     conserved_mutated_seq = Mutate_protein(conserved_seq_original, num_mutation1)
@@ -164,7 +162,7 @@ def compare(zero_and_one_list, animle_list):
         non_conserved_percentage = 0
 
 
-    return conserved_percentage, non_conserved_percentage
+    return conserved_percentage, non_conserved_percentage, len_conserved
 
 #------------------------------------------------
 def file_to_list(file):
@@ -205,7 +203,6 @@ def position(protein_list):
             position_list.append((protein_list[h])[i])
 
         zero_one_list.append(is_conserved(position_list))
-        print("i = ", i)
     return zero_one_list
 
 #------------------------------------------------
@@ -278,7 +275,7 @@ GAPDH_list = file_to_list(GAPDH_file)
 zero_one_GAPDH_list = position(GAPDH_list)
 #print (zero_one_GAPDH_list)
 
-GAPDH_conserved, GAPDH_non_conserved= compare(zero_one_GAPDH_list, GAPDH_list[0])
+GAPDH_conserved, GAPDH_non_conserved, GAPDH_len_conserved= compare(zero_one_GAPDH_list, GAPDH_list[0])
 
 print("The protein: GAPDH")
 print(f"{GAPDH_conserved:.2f}% percent of the longest conserved region in the protein changed")
@@ -289,7 +286,10 @@ RBP1_list = file_to_list(RBP1_file)
 zero_one_RBP1_list = position(RBP1_list)
 #print (zero_one_RBP1_list)
 
-RBP1_conserved, RBP1_non_conserved = compare(zero_one_RBP1_list, RBP1_list[0])
+RBP1_conserved, RBP1_non_conserved, RBP1_len_conserved = compare(zero_one_RBP1_list, RBP1_list[0])
+#print("RBP1_len_conserved=",RBP1_len_conserved)
+
+
 
 #🥳🥳תוצאות סופיות🥳🥳#
 results_file=open('results/results_file', 'w')
@@ -307,17 +307,11 @@ results_file.write(f"{RBP1_non_conserved:.2f}% percent of the longest non-conser
 
 
 #הרצף השמור הארוך ביותר#
-max_GAPDH,start_GAPDH,end_GAPDH=max_seq (zero_one_GAPDH_list, GAPDH_list)
-max_RBP1,start_RBP1,end_RBP1=max_seq (zero_one_RBP1_list, RBP1_list)
-'''
-print(start_GAPDH)
-print(end_RBP1)
-print(max_RBP1)
-'''
 results_file.write("\n")
-results_file.write(f"GAPDH longest conserved sequence length={max_GAPDH}\n")
-results_file.write(f"RBP1 longest conserved sequence length={max_RBP1}\n")
+results_file.write(f"GAPDH longest conserved sequence length={GAPDH_len_conserved}\n")
+results_file.write(f"RBP1 longest conserved sequence length={RBP1_len_conserved}\n")
 results_file.write("\n")
+
 
 #השם של כל חיה ואז האורך של הרצף שלה ומה האחוז עמודות שפסלנו בה#
 RBP1_data=writing_to_file_per_org(RBP1_list,RBP1_file,results_file)
