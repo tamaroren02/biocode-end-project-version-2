@@ -258,4 +258,9 @@ results_file.write("\n")
 results_file.write(f"{RBP1_conserved:.2f}% percent of the longest conserved region in the protein changed\n")
 results_file.write(f"{RBP1_non_conserved:.2f}% percent of the longest non-conserved region in the protein changed\n")
 
+max_GAPDH,start_GAPDH,end_GAPDH=max_seq (zero_one_GAPDH_list, GAPDH_list)
+max_RBP1,start_RBP1,end_RBP1=max_seq (zero_one_RBP1_list, RBP1_list)
 
+results_file.write(f"GAPDH longest conserved sequence length={max_GAPDH}\n")
+results_file.write("\n")
+results_file.write(f"RBP1 longest conserved sequence length={max_RBP1}\n")
