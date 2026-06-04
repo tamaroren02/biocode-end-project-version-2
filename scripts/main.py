@@ -222,8 +222,6 @@ def seq_lengths(seq_list,organism_file,file_for_results):
             organism_name = line[1:line.find("_")]
             organism_names_list.append(organism_name)
 
-    print(len(organism_names_list))
-    print(len(seq_lengths_list))
     for i in range(8):
         file_for_results.write(f"{organism_names_list[i]} length={seq_lengths_list[i]}\n")
 #------------------------------------------------
@@ -284,9 +282,9 @@ max_RBP1,start_RBP1,end_RBP1=max_seq (zero_one_RBP1_list, RBP1_list)
 
 #הרצף השמור הארוך ביותר#
 results_file.write("\n")
-results_file.write("\n")
 results_file.write(f"GAPDH longest conserved sequence length={max_GAPDH}\n")
 results_file.write(f"RBP1 longest conserved sequence length={max_RBP1}\n")
+results_file.write("\n")
 
 #אורך של כל אחד מהרצפים והשם שלהם#
 RBP1_length=seq_lengths(RBP1_list,RBP1_file,results_file)
