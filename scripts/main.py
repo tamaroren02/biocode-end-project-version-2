@@ -6,7 +6,7 @@ def is_conserved(amino_acid_list):
     מקבלת: amino_acid_list
     מחזירה: 1/ 0 / '-'.
     '''
-    cnt = 0
+    
     cnt_dict ={}
     for i in range(len(amino_acid_list)):
         if amino_acid_list[i] in cnt_dict:
@@ -19,14 +19,15 @@ def is_conserved(amino_acid_list):
 
     if len(cnt_dict) <= 2:
         max_value = max(cnt_dict.values())
-        x=8-cnt#
-        fraction= max_value/x#
-        if fraction>=0.75:#
+        num_amino_acides= 8 - cnt_dict['-']
+        max_amino_acid = max_value / num_amino_acides
+
+        if max_amino_acid >= 0.75:
             return 1
         else:
             return 0
-    else:
-        return 0
+    
+    return 0
 
 #------------------------------------------------
 def max_seq (zero_or_one, list):
