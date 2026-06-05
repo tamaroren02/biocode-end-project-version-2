@@ -27,9 +27,9 @@ def is_conserved(amino_acid_list):
 
     if len(cnt_dict) <= 2:
         max_value = max(cnt_dict.values())
-        x=8-cnt
-        fraction= max_value/x
-        if fraction>=0.75:
+        x=8-cnt#
+        fraction= max_value/x#
+        if fraction>=0.75:#
             return 1
         else:
             return 0
@@ -211,7 +211,7 @@ def position(protein_list):
 
 #------------------------------------------------
 
-def seq_lengths(seq_list,organism_file,file_for_results):
+def seq_lengths(seq_list,organism_file):
     #מקבלת את הליסט של האורגניזמים, הקובץ,ואת הקובץ שרושמים אליו את התשובות הסופיות
     #הפונקציה מוצאת את אורך כל אחד מהאורגניזמים ומכניסה לקובץ התוצאות הסופיות את השם של האורגניזם ומה האורך שלו
     organism_file.seek(0)
@@ -252,14 +252,15 @@ def disqualified_columns(seq_list):
 
 #------------------------------------------------
 def writing_to_file_per_org(seq_list,organism_file,file_for_results):#*****
-#כותב לתוך הקובץ את השם של כל חיה : מה האורך שלה וכמה עמודות פסלנו בה
-    organism_names_list,seq_lengths_list=seq_lengths(seq_list,organism_file,file_for_results)
+    #כותב לתוך הקובץ את השם של כל חיה : מה האורך שלה וכמה עמודות פסלנו בה
+    organism_names_list,seq_lengths_list=seq_lengths(seq_list,organism_file)
     for i in range(8):
         #disqualified_columns_precentage,disqualified_columns_cnt=disqualified_columns(seq_list[i])
-        file_for_results.write(f"{organism_names_list[i]}:\n")
-        file_for_results.write(f"length={seq_lengths_list[i]}\n")
+        file_for_results.write(f"{organism_names_list[i]},")
+        #file_for_results.write(f"length={seq_lengths_list[i]}\n")
         #file_for_results.write(f"amount of disqualified coulcolumns= {disqualified_columns_cnt}\n")
         #file_for_results.write(f"precentage of disqualified coulcolumns= {disqualified_columns_precentage:.2f}%\n")
+    file_for_results.write(f"\ntheir mutual length={seq_lengths_list[i]}\n")
 #------------------------------------------------
 def graph_changes (zero_and_one_list, organism_list,graph_file,file_for_results):
     #קבצים שנכניס לאקסל ונעשה גרפים#
@@ -280,7 +281,7 @@ def graph_changes (zero_and_one_list, organism_list,graph_file,file_for_results)
         total_n_c_s+=n_c_s
         total_c_s+=c_s
 
-#------------------------------------------------
+#-----------------------------------------------
 #תוכנית ראשית#
 
 # פתיחת הקבצים
@@ -326,24 +327,25 @@ results_file=open('results/results_file', 'w')
 results_file.write("Results:\n")
 results_file.write("\n")
 
+#GAPDH:
 #אחוזי השינוי בחלק הכי ארוך השמור והלא שמור#
 results_file.write("GAPDH:\n")
 results_file.write(f"{GAPDH_conserved:.2f}% percent of the longest conserved region in the protein changed\n")
 results_file.write(f"{GAPDH_non_conserved:.2f}% percent of the longest non-conserved region in the protein changed\n")
 
-
 #הרצף השמור הארוך ביותר#
 results_file.write("\n")
-results_file.write(f"GAPDH longest conserved sequence length={GAPDH_len_conserved}\n")
+results_file.write(f" longest conserved sequence length={GAPDH_len_conserved}\n")
 
-
-
-#השם של כל חיה ואז האורך של הרצף שלה ומה האחוז עמודות שפסלנו בה#
+#השם של כל חיה ואז האורך של הרצף שלה ומה האחוז עמודות שפסלנו בה#****************
 GAPDH_data=writing_to_file_per_org(GAPDH_list,GAPDH_file,results_file)
 
 #קבצים שנכניס לאקסל ונעשה גרפים#
 #אחוזים של שמור ולא שמור#
 GAPDH_graph_file=open('results/GAPDH_graph', 'w')
+
+results_file.write("\n")
+results_file.write("\n")
 
 
 """GAPDH_graph_changes=graph_changes (zero_one_GAPDH_list, GAPDH_list,GAPDH_graph_file)
@@ -351,13 +353,18 @@ RBP1_graph_changes=graph_changes (zero_one_RBP1_list, RBP1_list,RBP1_graph_file)
 
 
 #RBP1
+#אחוזי השינוי בחלק הכי ארוך השמור והלא שמור#
 results_file.write("RBP1:\n")
 results_file.write(f"{RBP1_conserved:.2f}% percent of the longest conserved region in the protein changed\n")
 results_file.write(f"{RBP1_non_conserved:.2f}% percent of the longest non-conserved region in the protein changed\n")
 
-results_file.write(f"RBP1 longest conserved sequence length={RBP1_len_conserved}\n")
+#הרצף השמור הארוך ביותר#
+results_file.write(f" longest conserved sequence length={RBP1_len_conserved}\n")
 results_file.write("\n")
 
+#השם של כל חיה ואז האורך של הרצף שלה ומה האחוז עמודות שפסלנו בה#*********************
 RBP1_data=writing_to_file_per_org(RBP1_list,RBP1_file,results_file)
 
+#קבצים שנכניס לאקסל ונעשה גרפים#
+#אחוזים של שמור ולא שמור#
 RBP1_graph_file=open('results/RBP1_graph', 'w')
