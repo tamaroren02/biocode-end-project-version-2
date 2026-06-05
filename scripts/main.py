@@ -89,6 +89,7 @@ def amino_acid_groups(original_seq, mutated_seq):
                     cnt_svd_grp += 1
                 else:
                     nt_cnt_svd_grp+=1
+
     return cnt_svd_grp,nt_cnt_svd_grp
 
 #------------------------------------------------
@@ -105,8 +106,6 @@ def Mutate_protein(seq, num_mutation):
                         'V', 'A', 'D', 'G', 'E']
 
   for i in range(num_mutation):
-    
-    
     rand_acid = random.choice(amino_acids_list)
     
     rand_num = random.randrange(0,len(seq))
@@ -132,11 +131,11 @@ def compare(zero_and_one_list, animle_list):
     num_mutation1 = int(len_conserved * 0.2)
     conserved_mutated_seq = Mutate_protein(conserved_seq_original, num_mutation1)
     
-    c_s ,c_not_saved = amino_acid_groups(conserved_seq_original, conserved_mutated_seq)
+    c_saved ,c_not_saved = amino_acid_groups(conserved_seq_original, conserved_mutated_seq)
 
     if len_conserved != 0 :
         # חישוב בכמה אחוזים הרצף ישתנה
-        conserved_percentage = 100 * ( c_s / len_conserved)
+        conserved_percentage = 100 * ( c_saved / len_conserved)
     
     else:
         conserved_percentage = 0
@@ -148,18 +147,19 @@ def compare(zero_and_one_list, animle_list):
     num_mutation0 = int(len_non_conserved * 0.2)
     non_conserved_seq_mutated = Mutate_protein(non_conserved_seq_original, num_mutation0)
 
-    n_c_s,nc_not_saved  = amino_acid_groups(non_conserved_seq_original, non_conserved_seq_mutated)
+    nc_saved,nc_not_saved  = amino_acid_groups(non_conserved_seq_original, non_conserved_seq_mutated)
 
     if len_non_conserved != 0:
         # חישוב בכמה אחוזים הרצף ישתנה
-        non_conserved_percentage = 100 * ( n_c_s / len_non_conserved)
+        non_conserved_percentage = 100 * ( nc_saved / len_non_conserved)
         
     else:
         non_conserved_percentage = 0
 
-    #nc_not_saved=non_conserved_cnt_not_save  c_not_saved=conserved_cnt_not_saved
-    #non_conserved_cnt_saved=n_c_s   conserved_cnt_saved=c_s
-    return conserved_percentage, non_conserved_percentage, len_conserved, nc_not_saved, c_not_saved, n_c_s, c_s
+    #להלן פירוט על חלק משמות המשתנים:
+    #nc_not_saved = non_conserved_cnt_not_saved  ,c_not_saved = conserved_cnt_not_saved
+    #nc_saved = non_conserved_cnt_saved  , c_saved = conserved_cnt_saved
+    return conserved_percentage, non_conserved_percentage, len_conserved, nc_not_saved, c_not_saved, nc_saved, c_saved
 
 #------------------------------------------------
 def file_to_list(file):
@@ -258,21 +258,25 @@ def writing_to_file_per_org(seq_list,organism_file,file_for_results):#*****
 def graph_changes (zero_and_one_list, organism_list,graph_file,file_for_results):
     #קבצים שנכניס לאקסל ונעשה גרפים#
     #אחוזים של שמור ולא שמור#
-    n_c_s=0
-    c_s=0
+    '''n_c_s=0
+    c_s=0'''
+    
     num_reps=15
     total_nc_not_saved=0
     total_c_not_saved=0
-    total_n_c_s=0
-    total_c_s=0
+    total_nc_saved=0
+    total_c_saved=0
+    
     for i in range(num_reps):  
         zero_one_list = position(organism_list)
-        conserved, non_conserved, conserved_amount, cnt_saved,cnt_not_saved,n_c_s,c_s= compare(zero_and_one_list,organism_list[0])
+        conserved, non_conserved, conserved_amount, nc_not_saved, c_not_saved, nc_saved, c_saved= compare(zero_and_one_list,organism_list[0])
+        
         graph_file.write(f"{conserved:.2f}%,{non_conserved:.2f}%\n")
-        total_nc_not_saved+=cnt_not_saved
-        total_c_not_saved+=cnt_saved
-        total_n_c_s+=n_c_s
-        total_c_s+=c_s
+
+        total_nc_not_saved += nc_not_saved
+        total_c_not_saved += c_not_saved
+        total_nc_saved += nc_saved
+        total_c_saved += c_saved
 
 #-----------------------------------------------
 #תוכנית ראשית#
