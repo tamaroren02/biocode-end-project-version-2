@@ -2,75 +2,43 @@ Results:
 
 GAPDH:
 2.94% percent of the longest conserved region in the protein changed
-12.50% percent of the longest non-conserved region in the protein changed
-RBP1:
-1.82% percent of the longest conserved region in the protein changed
-3.57% percent of the longest non-conserved region in the protein changed
+0.00% percent of the longest non-conserved region in the protein changed
 
 GAPDH longest conserved sequence length=34
+Yeast:
+length=341
+Worm:
+length=341
+Fly:
+length=341
+Frog:
+length=341
+Fish:
+length=341
+Human:
+length=341
+Mouse:
+length=341
+Cow:
+length=341
+RBP1:
+3.64% percent of the longest conserved region in the protein changed
+0.00% percent of the longest non-conserved region in the protein changed
 RBP1 longest conserved sequence length=55
 
 Yeast:
 length=1974
-amount of disqualified coulcolumns= 80
-precentage of disqualified coulcolumns= 4.05%
 Human:
 length=1974
-amount of disqualified coulcolumns= 1
-precentage of disqualified coulcolumns= 0.05%
 Cow:
 length=1974
-amount of disqualified coulcolumns= 1
-precentage of disqualified coulcolumns= 0.05%
 Mouse:
 length=1974
-amount of disqualified coulcolumns= 1
-precentage of disqualified coulcolumns= 0.05%
 Frog:
 length=1974
-amount of disqualified coulcolumns= 2
-precentage of disqualified coulcolumns= 0.10%
 Fish:
 length=1974
-amount of disqualified coulcolumns= 3
-precentage of disqualified coulcolumns= 0.15%
 Fly:
 length=1974
-amount of disqualified coulcolumns= 29
-precentage of disqualified coulcolumns= 1.47%
 Worm:
 length=1974
-amount of disqualified coulcolumns= 39
-precentage of disqualified coulcolumns= 1.98%
-Yeast:
-length=341
-amount of disqualified coulcolumns= 3
-precentage of disqualified coulcolumns= 0.88%
-Worm:
-length=341
-amount of disqualified coulcolumns= 0
-precentage of disqualified coulcolumns= 0.00%
-Fly:
-length=341
-amount of disqualified coulcolumns= 3
-precentage of disqualified coulcolumns= 0.88%
-Frog:
-length=341
-amount of disqualified coulcolumns= 2
-precentage of disqualified coulcolumns= 0.59%
-Fish:
-length=341
-amount of disqualified coulcolumns= 2
-precentage of disqualified coulcolumns= 0.59%
-Human:
-length=341
-amount of disqualified coulcolumns= 2
-precentage of disqualified coulcolumns= 0.59%
-Mouse:
-length=341
-amount of disqualified coulcolumns= 2
-precentage of disqualified coulcolumns= 0.59%
-Cow:
-length=341
-amount of disqualified coulcolumns= 2
-precentage of disqualified coulcolumns= 0.59%

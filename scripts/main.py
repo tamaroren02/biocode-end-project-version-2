@@ -27,8 +27,8 @@ def is_conserved(amino_acid_list):
 
     if len(cnt_dict) <= 2:
         max_value = max(cnt_dict.values())
-"""        x=8-cnt
-        fraction= max_value/x"""
+        x=8-cnt
+        fraction= max_value/x
         if fraction>=0.75:
             return 1
         else:
@@ -87,14 +87,16 @@ def amino_acid_groups(original_seq, mutated_seq):
     #5
     Hydrophobic_sidechains = ['A', 'V', 'I','L', 'M', 'F','Y', 'W']
     """
-    cnt = 0
-
+    cnt_svd_grp = 0
+    nt_cnt_svd_grp=0
     for i in range(len(original_seq)):
         if original_seq[i] != mutated_seq[i]:
             for j in range(len(groups)):
                 if mutated_seq[i] in groups[j] and original_seq[i] in groups[j]:
-                    cnt += 1
-    return cnt
+                    cnt_svd_grp += 1
+                else:
+                    nt_cnt_svd_grp+=1
+    return cnt_svd_grp,nt_cnt_svd_grp
 
 #------------------------------------------------
 
@@ -104,7 +106,7 @@ def Mutate_protein(seq, num_mutation):
   מקבלת: seq, num_mutation
   מחזירה: seq
   '''
-  amino_acids_list = ['F', 'S', 'Y', 'C', 'L', '*', 'W',
+  amino_acids_list = ['F', 'S', 'Y', 'C', 'L', 'W',
                         'P', 'H', 'R', 'Q',
                         'I', 'T', 'N', 'K', 'M',
                         'V', 'A', 'D', 'G', 'E']
@@ -132,16 +134,16 @@ def compare(zero_and_one_list, animle_list):
     '''
     len_conserved, start1, stop1 = max_seq(1, zero_and_one_list)
     conserved_seq_original = animle_list[start1: stop1 + 1]
-    print(len_conserved)
+    #print(len_conserved)
 
     num_mutation1 = int(len_conserved * 0.2)
     conserved_mutated_seq = Mutate_protein(conserved_seq_original, num_mutation1)
     
-    conserved_cnt = amino_acid_groups(conserved_seq_original, conserved_mutated_seq)
+    c_s ,c_not_saved = amino_acid_groups(conserved_seq_original, conserved_mutated_seq)
 
     if len_conserved != 0 :
         # חישוב בכמה אחוזים הרצף ישתנה
-        conserved_percentage = 100 * ( conserved_cnt / len_conserved)
+        conserved_percentage = 100 * ( c_s / len_conserved)
     
     else:
         conserved_percentage = 0
@@ -153,17 +155,18 @@ def compare(zero_and_one_list, animle_list):
     num_mutation0 = int(len_non_conserved * 0.2)
     non_conserved_seq_mutated = Mutate_protein(non_conserved_seq_original, num_mutation0)
 
-    non_conserved_cnt = amino_acid_groups(non_conserved_seq_original, non_conserved_seq_mutated)
+    n_c_s,nc_not_saved  = amino_acid_groups(non_conserved_seq_original, non_conserved_seq_mutated)
 
     if len_non_conserved != 0:
         # חישוב בכמה אחוזים הרצף ישתנה
-        non_conserved_percentage = 100 * ( non_conserved_cnt / len_non_conserved)
+        non_conserved_percentage = 100 * ( n_c_s / len_non_conserved)
         
     else:
         non_conserved_percentage = 0
 
-
-    return conserved_percentage, non_conserved_percentage, len_conserved
+    #nc_not_saved=non_conserved_cnt_not_save  c_not_saved=conserved_cnt_not_saved
+    #non_conserved_cnt_saved=n_c_s   conserved_cnt_saved=c_s
+    return conserved_percentage, non_conserved_percentage, len_conserved, nc_not_saved, c_not_saved, n_c_s, c_s
 
 #------------------------------------------------
 def file_to_list(file):
@@ -244,24 +247,39 @@ def disqualified_columns(seq_list):
                 continue
     disqualified_columns_precentage= (disqualified_columns_cnt/total_amount_amino_acids)*100
     return disqualified_columns_precentage,disqualified_columns_cnt
+
+
+
 #------------------------------------------------
-def writing_to_file_per_org(seq_list,organism_file,file_for_results):
+def writing_to_file_per_org(seq_list,organism_file,file_for_results):#*****
 #כותב לתוך הקובץ את השם של כל חיה : מה האורך שלה וכמה עמודות פסלנו בה
     organism_names_list,seq_lengths_list=seq_lengths(seq_list,organism_file,file_for_results)
     for i in range(8):
-        disqualified_columns_precentage,disqualified_columns_cnt=disqualified_columns(seq_list[i])
+        #disqualified_columns_precentage,disqualified_columns_cnt=disqualified_columns(seq_list[i])
         file_for_results.write(f"{organism_names_list[i]}:\n")
         file_for_results.write(f"length={seq_lengths_list[i]}\n")
-        file_for_results.write(f"amount of disqualified coulcolumns= {disqualified_columns_cnt}\n")
-        file_for_results.write(f"precentage of disqualified coulcolumns= {disqualified_columns_precentage:.2f}%\n")
+        #file_for_results.write(f"amount of disqualified coulcolumns= {disqualified_columns_cnt}\n")
+        #file_for_results.write(f"precentage of disqualified coulcolumns= {disqualified_columns_precentage:.2f}%\n")
 #------------------------------------------------
-def graph_changes (zero_and_one_list, organism_list,graph_file):
+def graph_changes (zero_and_one_list, organism_list,graph_file,file_for_results):
     #קבצים שנכניס לאקסל ונעשה גרפים#
     #אחוזים של שמור ולא שמור#
-    for i in range(15):  
+    n_c_s=0
+    c_s=0
+    num_reps=15
+    total_nc_not_saved=0
+    total_c_not_saved=0
+    total_n_c_s=0
+    total_c_s=0
+    for i in range(num_reps):  
         zero_one_list = position(organism_list)
-        conserved, non_conserved, conserved_amount= compare(zero_and_one_list,organism_list[0])
+        conserved, non_conserved, conserved_amount, cnt_saved,cnt_not_saved,n_c_s,c_s= compare(zero_and_one_list,organism_list[0])
         graph_file.write(f"{conserved:.2f}%,{non_conserved:.2f}%\n")
+        total_nc_not_saved+=cnt_not_saved
+        total_c_not_saved+=cnt_saved
+        total_n_c_s+=n_c_s
+        total_c_s+=c_s
+
 #------------------------------------------------
 #תוכנית ראשית#
 
@@ -278,24 +296,26 @@ GAPDH_conserved = 0
 GAPDH_non_conserved = 0
 RBP1_conserved = 0
 RBP1_non_conserved = 0
-
-
+n_c_s=0
+c_s=0
+nc_not_saved=0
+c_not_saved=0
 GAPDH_list = file_to_list(GAPDH_file)
 zero_one_GAPDH_list = position(GAPDH_list)
-print ("zero_one_GAPDH_list:",zero_one_GAPDH_list)
+#print ("zero_one_GAPDH_list:",zero_one_GAPDH_list)
 
-GAPDH_conserved, GAPDH_non_conserved, GAPDH_len_conserved= compare(zero_one_GAPDH_list, GAPDH_list[0])
+GAPDH_conserved, GAPDH_non_conserved, GAPDH_len_conserved,nc_not_saved, c_not_saved,n_c_s,c_s = compare(zero_one_GAPDH_list, GAPDH_list[0])
 
-print("The protein: GAPDH")
-print(f"{GAPDH_conserved:.2f}% percent of the longest conserved region in the protein changed")
-print(f"{GAPDH_non_conserved:.2f}% percent of the longest non-conserved region in the protein changed\n")
+#print("The protein: GAPDH")
+#print(f"{GAPDH_conserved:.2f}% percent of the longest conserved region in the protein changed")
+#print(f"{GAPDH_non_conserved:.2f}% percent of the longest non-conserved region in the protein changed\n")
 
 
 RBP1_list = file_to_list(RBP1_file)
 zero_one_RBP1_list = position(RBP1_list)
-print ("zero_one_RBP1_list",zero_one_RBP1_list)
+#print ("zero_one_RBP1_list",zero_one_RBP1_list)
 
-RBP1_conserved, RBP1_non_conserved, RBP1_len_conserved = compare(zero_one_RBP1_list, RBP1_list[0])
+RBP1_conserved, RBP1_non_conserved, RBP1_len_conserved,nc_not_saved, c_not_saved,n_c_s,c_s = compare(zero_one_RBP1_list, RBP1_list[0])
 #print("RBP1_len_conserved=",RBP1_len_conserved)
 
 
@@ -310,26 +330,34 @@ results_file.write("\n")
 results_file.write("GAPDH:\n")
 results_file.write(f"{GAPDH_conserved:.2f}% percent of the longest conserved region in the protein changed\n")
 results_file.write(f"{GAPDH_non_conserved:.2f}% percent of the longest non-conserved region in the protein changed\n")
-results_file.write("RBP1:\n")
-results_file.write(f"{RBP1_conserved:.2f}% percent of the longest conserved region in the protein changed\n")
-results_file.write(f"{RBP1_non_conserved:.2f}% percent of the longest non-conserved region in the protein changed\n")
 
 
 #הרצף השמור הארוך ביותר#
 results_file.write("\n")
 results_file.write(f"GAPDH longest conserved sequence length={GAPDH_len_conserved}\n")
-results_file.write(f"RBP1 longest conserved sequence length={RBP1_len_conserved}\n")
-results_file.write("\n")
+
 
 
 #השם של כל חיה ואז האורך של הרצף שלה ומה האחוז עמודות שפסלנו בה#
-RBP1_data=writing_to_file_per_org(RBP1_list,RBP1_file,results_file)
 GAPDH_data=writing_to_file_per_org(GAPDH_list,GAPDH_file,results_file)
 
 #קבצים שנכניס לאקסל ונעשה גרפים#
 #אחוזים של שמור ולא שמור#
 GAPDH_graph_file=open('results/GAPDH_graph', 'w')
-RBP1_graph_file=open('results/RBP1_graph', 'w')
 
-GAPDH_graph_changes=graph_changes (zero_one_GAPDH_list, GAPDH_list,GAPDH_graph_file)
-RBP1_graph_changes=graph_changes (zero_one_RBP1_list, RBP1_list,RBP1_graph_file)
+
+"""GAPDH_graph_changes=graph_changes (zero_one_GAPDH_list, GAPDH_list,GAPDH_graph_file)
+RBP1_graph_changes=graph_changes (zero_one_RBP1_list, RBP1_list,RBP1_graph_file)"""
+
+
+#RBP1
+results_file.write("RBP1:\n")
+results_file.write(f"{RBP1_conserved:.2f}% percent of the longest conserved region in the protein changed\n")
+results_file.write(f"{RBP1_non_conserved:.2f}% percent of the longest non-conserved region in the protein changed\n")
+
+results_file.write(f"RBP1 longest conserved sequence length={RBP1_len_conserved}\n")
+results_file.write("\n")
+
+RBP1_data=writing_to_file_per_org(RBP1_list,RBP1_file,results_file)
+
+RBP1_graph_file=open('results/RBP1_graph', 'w')
