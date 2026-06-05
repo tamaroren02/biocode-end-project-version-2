@@ -9,20 +9,12 @@ def is_conserved(amino_acid_list):
     cnt = 0
     cnt_dict ={}
     for i in range(len(amino_acid_list)):
-        if amino_acid_list[i] == '-':
-            cnt += 1
-            if amino_acid_list[i] in cnt_dict:
-                cnt_dict[amino_acid_list[i]] += 1
-            else:
-                cnt_dict[amino_acid_list[i]] = 1
-        
-        else:   
-            if amino_acid_list[i] in cnt_dict:
-                cnt_dict[amino_acid_list[i]] += 1
-            else:
-                cnt_dict[amino_acid_list[i]] = 1
+        if amino_acid_list[i] in cnt_dict:
+            cnt_dict[amino_acid_list[i]] += 1
+        else:
+            cnt_dict[amino_acid_list[i]] = 1
 
-    if cnt >= 3:
+    if cnt_dict['-'] >= 3:
         return '-'
 
     if len(cnt_dict) <= 2:
