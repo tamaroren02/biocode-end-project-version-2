@@ -14,12 +14,12 @@ def is_conserved(amino_acid_list):
         else:
             cnt_dict[amino_acid_list[i]] = 1
 
-    if cnt_dict['-'] >= 3:
+    if cnt_dict.get("-", 0) >= 3:
         return '-'
 
     if len(cnt_dict) <= 2:
         max_value = max(cnt_dict.values())
-        num_amino_acides= 8 - cnt_dict['-']
+        num_amino_acides= 8 - cnt_dict.get('-', 0)
         max_amino_acid = max_value / num_amino_acides
 
         if max_amino_acid >= 0.75:
@@ -255,12 +255,13 @@ def writing_to_file_per_org(seq_list,organism_file,file_for_results):#*****
         #file_for_results.write(f"precentage of disqualified coulcolumns= {disqualified_columns_precentage:.2f}%\n")
     file_for_results.write(f"\ntheir mutual length={seq_lengths_list[i]}\n")
 #------------------------------------------------
-def graph_changes (zero_and_one_list, organism_list,graph_file,file_for_results):
+
+def graph_changes (zero_and_one_list, organism_list,graph_file):
     #קבצים שנכניס לאקסל ונעשה גרפים#
     #אחוזים של שמור ולא שמור#
     '''n_c_s=0
     c_s=0'''
-    
+
     num_reps=15
     total_nc_not_saved=0
     total_c_not_saved=0
@@ -268,7 +269,6 @@ def graph_changes (zero_and_one_list, organism_list,graph_file,file_for_results)
     total_c_saved=0
     
     for i in range(num_reps):  
-        zero_one_list = position(organism_list)
         conserved, non_conserved, conserved_amount, nc_not_saved, c_not_saved, nc_saved, c_saved= compare(zero_and_one_list,organism_list[0])
         
         graph_file.write(f"{conserved:.2f}%,{non_conserved:.2f}%\n")
@@ -277,6 +277,8 @@ def graph_changes (zero_and_one_list, organism_list,graph_file,file_for_results)
         total_c_not_saved += c_not_saved
         total_nc_saved += nc_saved
         total_c_saved += c_saved
+
+    return total_nc_not_saved, total_c_not_saved, total_nc_saved, total_c_saved
 
 #-----------------------------------------------
 #תוכנית ראשית#
@@ -334,21 +336,6 @@ results_file.write(f"{GAPDH_non_conserved:.2f}% percent of the longest non-conse
 results_file.write("\n")
 results_file.write(f" longest conserved sequence length={GAPDH_len_conserved}\n")
 
-#השם של כל חיה ואז האורך של הרצף שלה ומה האחוז עמודות שפסלנו בה#****************
-GAPDH_data=writing_to_file_per_org(GAPDH_list,GAPDH_file,results_file)
-
-#קבצים שנכניס לאקסל ונעשה גרפים#
-#אחוזים של שמור ולא שמור#
-GAPDH_graph_file=open('results/GAPDH_graph', 'w')
-
-results_file.write("\n")
-results_file.write("\n")
-
-
-"""GAPDH_graph_changes=graph_changes (zero_one_GAPDH_list, GAPDH_list,GAPDH_graph_file)
-RBP1_graph_changes=graph_changes (zero_one_RBP1_list, RBP1_list,RBP1_graph_file)"""
-
-
 #RBP1
 #אחוזי השינוי בחלק הכי ארוך השמור והלא שמור#
 results_file.write("RBP1:\n")
@@ -359,9 +346,34 @@ results_file.write(f"{RBP1_non_conserved:.2f}% percent of the longest non-conser
 results_file.write(f" longest conserved sequence length={RBP1_len_conserved}\n")
 results_file.write("\n")
 
-#השם של כל חיה ואז האורך של הרצף שלה ומה האחוז עמודות שפסלנו בה#*********************
-RBP1_data=writing_to_file_per_org(RBP1_list,RBP1_file,results_file)
+'''#השם של כל חיה ואז האורך של הרצף שלה ומה האחוז עמודות שפסלנו בה#*********************************************************
+GAPDH_data = writing_to_file_per_org(GAPDH_list,GAPDH_file,results_file)
+'''
+
+
+
 
 #קבצים שנכניס לאקסל ונעשה גרפים#
 #אחוזים של שמור ולא שמור#
-RBP1_graph_file=open('results/RBP1_graph', 'w')
+GAPDH_graph_file = open('results/GAPDH_graph', 'w')
+RBP1_graph_file = open('results/RBP1_graph', 'w')
+
+
+results_file.write("\n")
+results_file.write("\n")
+
+
+GAPDH_nc_not_saved, GAPDH_c_not_saved, GAPDH_nc_saved, GAPDH_c_saved = graph_changes (zero_one_GAPDH_list, GAPDH_list, GAPDH_graph_file)
+
+RBP1_nc_not_saved, RBP1_c_not_saved, RBP1_nc_saved, RBP1_c_saved = graph_changes (zero_one_RBP1_list, RBP1_list, RBP1_graph_file)
+
+
+
+
+
+'''#השם של כל חיה ואז האורך של הרצף שלה ומה האחוז עמודות שפסלנו בה#*********************
+RBP1_data=writing_to_file_per_org(RBP1_list,RBP1_file,results_file)
+'''
+'''#קבצים שנכניס לאקסל ונעשה גרפים#
+#אחוזים של שמור ולא שמור#
+RBP1_graph_file=open('results/RBP1_graph', 'w')'''

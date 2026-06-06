@@ -5,14 +5,10 @@ GAPDH:
 0.00% percent of the longest non-conserved region in the protein changed
 
  longest conserved sequence length=34
-Yeast,Worm,Fly,Frog,Fish,Human,Mouse,Cow,
-their mutual length=341
-
-
 RBP1:
-1.82% percent of the longest conserved region in the protein changed
-0.00% percent of the longest non-conserved region in the protein changed
+0.00% percent of the longest conserved region in the protein changed
+3.57% percent of the longest non-conserved region in the protein changed
  longest conserved sequence length=55
 
-Yeast,Human,Cow,Mouse,Frog,Fish,Fly,Worm,
-their mutual length=1974
+
+
