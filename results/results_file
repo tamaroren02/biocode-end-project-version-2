@@ -1,14 +1,20 @@
 Results:
 
 GAPDH:
-0.00% percent of the longest conserved region in the protein changed
+2.94% percent of the longest conserved region in the protein changed
 0.00% percent of the longest non-conserved region in the protein changed
 
  longest conserved sequence length=34
+precent of disqualified positions in GAPDH protein= 2.35%
+precent of non concerved positions in GAPDH protein= 27.27%
+precent of concerved positions in GAPDH protein= 70.38%
 RBP1:
-0.00% percent of the longest conserved region in the protein changed
-3.57% percent of the longest non-conserved region in the protein changed
+1.82% percent of the longest conserved region in the protein changed
+7.14% percent of the longest non-conserved region in the protein changed
  longest conserved sequence length=55
 
+precent of disqualified positions in RBP1 protein= 2.33%
+precent of non concerved positions in RBP1 protein= 32.27%
+precent of concerved positions in RBP1 protein= 65.40%
 
 

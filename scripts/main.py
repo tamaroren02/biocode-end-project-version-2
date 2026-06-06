@@ -221,27 +221,27 @@ def seq_lengths(seq_list,organism_file):
             organism_names_list.append(organism_name)
     return organism_names_list,seq_lengths_list
 #------------------------------------------------
-def disqualified_columns(seq_list):
-    """מקבל את הרצף של האורגניזם
-    ומחזיר מה האחוז של העמודות שפסלנו"""
-    cnt = 0
-    cnt_dict ={}
-    disqualified_columns_cnt=0
-    total_amount_amino_acids=len(seq_list)
-    for i in range(total_amount_amino_acids):
-        if seq_list[i] == "-":
-            cnt += 1
-            if "-" in cnt_dict:
-                cnt_dict["-"] += 1
-            if cnt >= 3:
-                disqualified_columns_cnt+=1
-                cnt=0
-            else:
-                continue
-    disqualified_columns_precentage= (disqualified_columns_cnt/total_amount_amino_acids)*100
-    return disqualified_columns_precentage,disqualified_columns_cnt
-
-
+    
+def columns_count(zero_one_list,file_for_results,protein_name):
+    #מקבל את הרשימה של 1(שמור), 0(לא שמור) ,-(פסול) 
+    #את הקובץ לתוצאות ואת שם החלבון
+    #מה היא עושה:מדפיסה אל תוך קובץ התוצאות אחוז של כמה כל אחד מהם הופיע ברשימה
+    columns_dict={}
+    zero_one_list_amount=len(zero_one_list)
+    for i in range(zero_one_list_amount):
+        if zero_one_list[i] in columns_dict:
+            columns_dict[zero_one_list[i]] += 1
+        else:
+            columns_dict[zero_one_list[i]] = 1
+    
+    for y in columns_dict:
+        columns_precentage= (columns_dict[y]/zero_one_list_amount)*100
+        if y == 1:
+            file_for_results.write(f"precent of concerved positions in {protein_name} protein= {columns_precentage:.2f}%\n")
+        elif y == 0:
+            file_for_results.write(f"precent of non concerved positions in {protein_name} protein= {columns_precentage:.2f}%\n")
+        elif y == "-":
+            file_for_results.write(f"precent of disqualified positions in {protein_name} protein= {columns_precentage:.2f}%\n")
 
 #------------------------------------------------
 def writing_to_file_per_org(seq_list,organism_file,file_for_results):#*****
@@ -336,6 +336,9 @@ results_file.write(f"{GAPDH_non_conserved:.2f}% percent of the longest non-conse
 results_file.write("\n")
 results_file.write(f" longest conserved sequence length={GAPDH_len_conserved}\n")
 
+GAPDH="GAPDH"
+GAPDH_columns_count=columns_count(zero_one_GAPDH_list,results_file,GAPDH)
+
 #RBP1
 #אחוזי השינוי בחלק הכי ארוך השמור והלא שמור#
 results_file.write("RBP1:\n")
@@ -345,6 +348,10 @@ results_file.write(f"{RBP1_non_conserved:.2f}% percent of the longest non-conser
 #הרצף השמור הארוך ביותר#
 results_file.write(f" longest conserved sequence length={RBP1_len_conserved}\n")
 results_file.write("\n")
+
+RBP1="RBP1"
+RBP1_columns_count=columns_count(zero_one_RBP1_list,results_file,RBP1)
+
 
 '''#השם של כל חיה ואז האורך של הרצף שלה ומה האחוז עמודות שפסלנו בה#*********************************************************
 GAPDH_data = writing_to_file_per_org(GAPDH_list,GAPDH_file,results_file)
