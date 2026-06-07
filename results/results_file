@@ -1,14 +1,38 @@
 Results:
 
 GAPDH:
+<<<<<<< HEAD
 2.94% percent of the longest conserved region in the protein changed
+=======
+Yeast,Worm,Fly,Frog,Fish,Human,Mouse,Cow,
+their mutual length=341
+
+5.88% percent of the longest conserved region in the protein changed
+>>>>>>> 40beabef001549da4cc25bb3a6bbce1f4eda8236
 0.00% percent of the longest non-conserved region in the protein changed
 
  longest conserved sequence length=34
+
+precent of disqualified positions in GAPDH protein= 2.35%
+precent of non concerved positions in GAPDH protein= 27.27%
+precent of concerved positions in GAPDH protein= 70.38%
+
+
 RBP1:
+<<<<<<< HEAD
 3.64% percent of the longest conserved region in the protein changed
 0.00% percent of the longest non-conserved region in the protein changed
+=======
+Yeast,Human,Cow,Mouse,Frog,Fish,Fly,Worm,
+their mutual length=1974
+
+3.64% percent of the longest conserved region in the protein changed
+0.00% percent of the longest non-conserved region in the protein changed
+
+>>>>>>> 40beabef001549da4cc25bb3a6bbce1f4eda8236
  longest conserved sequence length=55
 
-
+precent of disqualified positions in RBP1 protein= 2.33%
+precent of non concerved positions in RBP1 protein= 32.27%
+precent of concerved positions in RBP1 protein= 65.40%
 
