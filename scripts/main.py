@@ -221,25 +221,10 @@ def seq_lengths(seq_list,organism_file):
             organism_names_list.append(organism_name)
     return organism_names_list,seq_lengths_list
 #------------------------------------------------
-def disqualified_columns(seq_list):
+def disqualified_columns(zero_one_list):
     """מקבל את הרצף של האורגניזם
     ומחזיר מה האחוז של העמודות שפסלנו"""
-    cnt = 0
-    cnt_dict ={}
-    disqualified_columns_cnt=0
-    total_amount_amino_acids=len(seq_list)
-    for i in range(total_amount_amino_acids):
-        if seq_list[i] == "-":
-            cnt += 1
-            if "-" in cnt_dict:
-                cnt_dict["-"] += 1
-            if cnt >= 3:
-                disqualified_columns_cnt+=1
-                cnt=0
-            else:
-                continue
-    disqualified_columns_precentage= (disqualified_columns_cnt/total_amount_amino_acids)*100
-    return disqualified_columns_precentage,disqualified_columns_cnt
+    
 
 
 
@@ -259,19 +244,18 @@ def writing_to_file_per_org(seq_list,organism_file,file_for_results):#*****
 def graph_changes (zero_and_one_list, organism_list,graph_file):
     #קבצים שנכניס לאקסל ונעשה גרפים#
     #אחוזים של שמור ולא שמור#
-    '''n_c_s=0
-    c_s=0'''
-
+    
     num_reps=15
     total_nc_not_saved=0
     total_c_not_saved=0
     total_nc_saved=0
     total_c_saved=0
-    
+
+    graph_file.write("conserved     non_conserved \n")
     for i in range(num_reps):  
         conserved, non_conserved, conserved_amount, nc_not_saved, c_not_saved, nc_saved, c_saved= compare(zero_and_one_list,organism_list[0])
         
-        graph_file.write(f"{conserved:.2f}%,{non_conserved:.2f}%\n")
+        graph_file.write(f"{conserved:.2f}%          {non_conserved:.2f}%\n")
 
         total_nc_not_saved += nc_not_saved
         total_c_not_saved += c_not_saved
