@@ -82,15 +82,21 @@ def amino_acid_groups(original_seq, mutated_seq):
     """
     cnt_svd_grp = 0
     nt_cnt_svd_grp=0
+
     for i in range(len(original_seq)):
         if original_seq[i] != mutated_seq[i]:
-            for j in range(len(groups)):
-                if mutated_seq[i] in groups[j] and original_seq[i] in groups[j]:
-                    cnt_svd_grp += 1
-                else:
-                    nt_cnt_svd_grp+=1
+            same_group = False
 
-    return cnt_svd_grp,nt_cnt_svd_grp
+            for group in groups:
+                if original_seq[i] in group and mutated_seq[i] in group:
+                    same_group = True
+                
+            if same_group:
+                cnt_svd_grp += 1
+            else:
+                nt_cnt_svd_grp += 1
+
+    return cnt_svd_grp, nt_cnt_svd_grp
 
 #------------------------------------------------
 
@@ -220,14 +226,6 @@ def seq_lengths(seq_list,organism_file):
             organism_names_list.append(organism_name)
     return organism_names_list,seq_lengths_list
 #------------------------------------------------
-<<<<<<< HEAD
-def disqualified_columns(zero_one_list):
-    """מקבל את הרצף של האורגניזם
-    ומחזיר מה האחוז של העמודות שפסלנו"""
-    
-
-
-=======
     
 def columns_count(zero_one_list,file_for_results,protein_name):
     #מקבל את הרשימה של 1(שמור), 0(לא שמור) ,-(פסול) 
@@ -249,7 +247,6 @@ def columns_count(zero_one_list,file_for_results,protein_name):
             file_for_results.write(f"precent of non concerved positions in {protein_name} protein= {columns_precentage:.2f}%\n")
         elif y == "-":
             file_for_results.write(f"precent of disqualified positions in {protein_name} protein= {columns_precentage:.2f}%\n")
->>>>>>> 40beabef001549da4cc25bb3a6bbce1f4eda8236
 
 #------------------------------------------------
 def writing_to_file_per_org(seq_list,organism_file,file_for_results):
@@ -263,21 +260,16 @@ def writing_to_file_per_org(seq_list,organism_file,file_for_results):
 def graph_changes (zero_and_one_list, organism_list,graph_file):
     #קבצים שנכניס לאקסל ונעשה גרפים#
     #אחוזים של שמור ולא שמור#
-<<<<<<< HEAD
-    
-=======
->>>>>>> 40beabef001549da4cc25bb3a6bbce1f4eda8236
     num_reps=15
     total_nc_not_saved=0
     total_c_not_saved=0
     total_nc_saved=0
     total_c_saved=0
-
-    graph_file.write("conserved     non_conserved \n")
+    
     for i in range(num_reps):  
         conserved, non_conserved, conserved_amount, nc_not_saved, c_not_saved, nc_saved, c_saved= compare(zero_and_one_list,organism_list[0])
         
-        graph_file.write(f"{conserved:.2f}%          {non_conserved:.2f}%\n")
+        graph_file.write(f"{conserved:.2f}%,{non_conserved:.2f}%\n")
 
         total_nc_not_saved += nc_not_saved
         total_c_not_saved += c_not_saved
