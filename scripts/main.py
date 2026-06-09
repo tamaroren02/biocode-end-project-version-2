@@ -266,12 +266,12 @@ def graph_changes (zero_and_one_list, organism_list,graph_file):
     total_nc_saved=0
     total_c_saved=0
     
-    graph_file.write(f"conserved  non_conserved\n")
+    graph_file.write(f"conserved,non_conserved\n")
 
     for i in range(num_reps):  
         conserved, non_conserved, conserved_amount, nc_not_saved, c_not_saved, nc_saved, c_saved= compare(zero_and_one_list,organism_list[0])
         
-        graph_file.write(f"{conserved:.2f}%     {non_conserved:.2f}%\n")
+        graph_file.write(f"{conserved:.2f}%,{non_conserved:.2f}%\n")
 
         total_nc_not_saved += nc_not_saved
         total_c_not_saved += c_not_saved
