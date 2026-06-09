@@ -260,16 +260,18 @@ def writing_to_file_per_org(seq_list,organism_file,file_for_results):
 def graph_changes (zero_and_one_list, organism_list,graph_file):
     #קבצים שנכניס לאקסל ונעשה גרפים#
     #אחוזים של שמור ולא שמור#
-    num_reps=15
+    num_reps=100
     total_nc_not_saved=0
     total_c_not_saved=0
     total_nc_saved=0
     total_c_saved=0
     
+    graph_file.write(f"conserved  non_conserved\n")
+
     for i in range(num_reps):  
         conserved, non_conserved, conserved_amount, nc_not_saved, c_not_saved, nc_saved, c_saved= compare(zero_and_one_list,organism_list[0])
         
-        graph_file.write(f"{conserved:.2f}%,{non_conserved:.2f}%\n")
+        graph_file.write(f"{conserved:.2f}%     {non_conserved:.2f}%\n")
 
         total_nc_not_saved += nc_not_saved
         total_c_not_saved += c_not_saved
@@ -298,15 +300,20 @@ n_c_s=0
 c_s=0
 nc_not_saved=0
 c_not_saved=0
+
+
 GAPDH_list = file_to_list(GAPDH_file)
 zero_one_GAPDH_list = position(GAPDH_list)
 
-GAPDH_conserved, GAPDH_non_conserved, GAPDH_len_conserved,nc_not_saved, c_not_saved,n_c_s,c_s = compare(zero_one_GAPDH_list, GAPDH_list[0])
+GAPDH_conserved, GAPDH_non_conserved, GAPDH_len_conserved, nc_not_saved, c_not_saved, nc_saved, c_saved = compare(zero_one_GAPDH_list, GAPDH_list[0])
 
 RBP1_list = file_to_list(RBP1_file)
 zero_one_RBP1_list = position(RBP1_list)
+print(zero_one_RBP1_list)
+print(len(zero_one_RBP1_list))
 
-RBP1_conserved, RBP1_non_conserved, RBP1_len_conserved,nc_not_saved, c_not_saved,n_c_s,c_s = compare(zero_one_RBP1_list, RBP1_list[0])
+
+RBP1_conserved, RBP1_non_conserved, RBP1_len_conserved, nc_not_saved, c_not_saved, nc_saved, c_saved = compare(zero_one_RBP1_list, RBP1_list[0])
 
 
 ###🥳🥳תוצאות סופיות🥳🥳###
