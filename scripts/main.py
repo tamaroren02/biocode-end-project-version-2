@@ -140,7 +140,7 @@ def compare(zero_and_one_list, animle_list):
 
     if len_conserved != 0 :
         # חישוב בכמה אחוזים הרצף ישתנה
-        conserved_percentage = 100 * ( c_not_saved / len_conserved)
+        conserved_percentage = 100 * ( c_not_saved / int(len_conserved * 0.2))
     
     else:
         conserved_percentage = 0
@@ -156,7 +156,7 @@ def compare(zero_and_one_list, animle_list):
 
     if len_non_conserved != 0:
         # חישוב בכמה אחוזים הרצף ישתנה
-        non_conserved_percentage = 100 * ( nc_not_saved / len_non_conserved)
+        non_conserved_percentage = 100 * ( nc_not_saved / int(len_non_conserved * 0.2))
         
     else:
         non_conserved_percentage = 0
