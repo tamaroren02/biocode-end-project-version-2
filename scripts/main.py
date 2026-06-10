@@ -139,7 +139,7 @@ def compare(zero_and_one_list, animle_list):
     
     c_saved ,c_not_saved = amino_acid_groups(conserved_seq_original, conserved_mutated_seq)
     #print("len_conserved",len_conserved)
-    if len_conserved < 5 :
+    if len_conserved != 0:
         # חישוב בכמה אחוזים הרצף ישתנה
         conserved_percentage = 100 * ( c_not_saved / int(len_conserved * 0.2))
     
@@ -157,7 +157,7 @@ def compare(zero_and_one_list, animle_list):
 
     nc_saved,nc_not_saved  = amino_acid_groups(non_conserved_seq_original, non_conserved_seq_mutated)
 
-    if len_non_conserved < 5:
+    if len_non_conserved != 0:
         # חישוב בכמה אחוזים הרצף ישתנה
         non_conserved_percentage = 100 * ( nc_not_saved / int(len_non_conserved * 0.2))
         
