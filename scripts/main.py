@@ -130,6 +130,7 @@ def compare(zero_and_one_list, animle_list):
     מקבלת: zero_and_one_list, animle_list
     מחזירה: conserved_percentage, non_conserved_percentage
     '''
+    #print("zero_and_one_list",zero_and_one_list)
     len_conserved, start1, stop1 = max_seq(1, zero_and_one_list)
     conserved_seq_original = animle_list[start1: stop1 + 1]
 
@@ -137,7 +138,7 @@ def compare(zero_and_one_list, animle_list):
     conserved_mutated_seq = Mutate_protein(conserved_seq_original, num_mutation1)
     
     c_saved ,c_not_saved = amino_acid_groups(conserved_seq_original, conserved_mutated_seq)
-
+    print("len_conserved",len_conserved)
     if len_conserved != 0 :
         # חישוב בכמה אחוזים הרצף ישתנה
         conserved_percentage = 100 * ( c_not_saved / int(len_conserved * 0.2))
@@ -150,6 +151,8 @@ def compare(zero_and_one_list, animle_list):
     non_conserved_seq_original = animle_list[start0: stop0 + 1]
 
     num_mutation0 = int(len_non_conserved * 0.2)
+    print("len_non_conserved",len_non_conserved)
+
     non_conserved_seq_mutated = Mutate_protein(non_conserved_seq_original, num_mutation0)
 
     nc_saved,nc_not_saved  = amino_acid_groups(non_conserved_seq_original, non_conserved_seq_mutated)
@@ -381,3 +384,6 @@ RBP1_file.close()
 results_file.close()
 GAPDH_graph_file.close()
 RBP1_graph_file.close()
+
+x=1.6
+print(int(x))
