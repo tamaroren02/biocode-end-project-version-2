@@ -64,6 +64,8 @@ def max_seq (zero_or_one, list):
 def amino_acid_groups(original_seq, mutated_seq):
     '''
     הפונקציה מקבלת רצף בצורתו המקורית ואחרי מוטציות, היא בודקת כמה שינויים יש בין שני הרצפים לפי המיפוי של החומצות אמינו לפי התכונות שלהן.
+    מקבלת: original_seq, mutated_seq
+    מחזירה: cnt_svd_grp, nt_cnt_svd_grp
     '''
     #מיפוי תכונות של חומצות אמינו
     groups = [['R','H','K'],['D','E'],['S', 'T', 'N', 'Q'],
