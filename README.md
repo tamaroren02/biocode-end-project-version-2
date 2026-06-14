@@ -1,1 +1,3 @@
-# biocode-end-project-version-2
+# אין צורך לשנות שום דבר בקוד, רק להסתכל בקובצי תוצאות
+#קבצי התוצאות נמצאים ב- results
+#הקבצים הרלוונטים: GAPDH_graph, RBP1_graph , results_file
