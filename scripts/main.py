@@ -84,7 +84,7 @@ def amino_acid_groups(original_seq, mutated_seq):
     """
 
     nt_cnt_svd_grp=0
-    cnt_svd_grp=0
+    
     for i in range(len(original_seq)):
         if original_seq[i] != mutated_seq[i]:
             same_group = False
@@ -93,9 +93,7 @@ def amino_acid_groups(original_seq, mutated_seq):
                 if original_seq[i] in group and mutated_seq[i] in group:
                     same_group = True
                 
-            if same_group:
-                cnt_svd_grp += 1
-            else:
+            if same_group == False:
                 nt_cnt_svd_grp += 1
 
     return nt_cnt_svd_grp
