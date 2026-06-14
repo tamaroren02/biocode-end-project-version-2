@@ -230,11 +230,11 @@ def columns_count(zero_one_list,file_for_results,protein_name):
     for y in columns_dict:
         columns_precentage= (columns_dict[y]/zero_one_list_amount)*100
         if y == 1:
-            file_for_results.write(f"precent of concerved positions in {protein_name} protein= {columns_precentage:.2f}%\n")
+            file_for_results.write(f"Percentage and number of conserved positions in the {protein_name} protein: {columns_precentage:.2f}% ({columns_dict[y]})\n")
         elif y == 0:
-            file_for_results.write(f"precent of non concerved positions in {protein_name} protein= {columns_precentage:.2f}%\n")
+            file_for_results.write(f"Percentage and number of non conserved positions in the {protein_name} protein: {columns_precentage:.2f}% ({columns_dict[y]})\n")
         elif y == "-":
-            file_for_results.write(f"precent of disqualified positions in {protein_name} protein= {columns_precentage:.2f}%\n")
+            file_for_results.write(f"Percentage and number of disqualified positions in the {protein_name} protein: {columns_precentage:.2f}% ({columns_dict[y]})\n")
 
 
 #------------------------------------------------
@@ -243,13 +243,11 @@ def graph_changes (zero_and_one_list, organism_list,graph_file):
     #קבצים שנכניס לאקסל ונעשה גרפים#
     #אחוזים של שמור ולא שמור#
     '''
-    הפונקציה מבצעת סימולציה- אחוז המוטציות שהובילו לשינוי קבוצה כימית של חומצת אמינו 
+    הפונקציה מבצעת סימולציה 100 פעמים- אחוז המוטציות שהובילו לשינוי קבוצה כימית של חומצת אמינו. בכל סבב של סימולציה הפונקציה כותבת את התוצאות לקובץ שכולל בו את תוצאות הסימולציה.
+    מקבלת: zero_and_one_list, organism_list,graph_file
+    מחזיקה: הפונקציה לא מחזירה כלום.
     '''
     num_reps=100
-    total_nc_not_saved=0
-    total_c_not_saved=0
-    total_nc_saved=0
-    total_c_saved=0
     
     graph_file.write(f"conserved,non_conserved\n")
 
@@ -257,13 +255,6 @@ def graph_changes (zero_and_one_list, organism_list,graph_file):
         conserved, non_conserved, conserved_amount, conserved_amount, nc_not_saved, c_not_saved, nc_saved, c_saved= compare(zero_and_one_list,organism_list[0])
         
         graph_file.write(f"{conserved:.2f}%,{non_conserved:.2f}%\n")
-
-        total_nc_not_saved += nc_not_saved
-        total_c_not_saved += c_not_saved
-        total_nc_saved += nc_saved
-        total_c_saved += c_saved
-
-    return total_nc_not_saved, total_c_not_saved, total_nc_saved, total_c_saved
 
 #-----------------------------------------------
 #תוכנית ראשית#
@@ -281,29 +272,21 @@ GAPDH_conserved = 0
 GAPDH_non_conserved = 0
 RBP1_conserved = 0
 RBP1_non_conserved = 0
-n_c_s=0
-c_s=0
+nc_saved=0
+c_saved=0
 nc_not_saved=0
 c_not_saved=0
 
 
 GAPDH_list = file_to_list(GAPDH_file)
 zero_one_GAPDH_list = position(GAPDH_list)
-print("RBP1")
 
 GAPDH_conserved, GAPDH_non_conserved, GAPDH_len_conserved, GAPDH_len_non_conserved,nc_not_saved, c_not_saved, nc_saved, c_saved = compare(zero_one_GAPDH_list, GAPDH_list[0])
-print("GAPDH_len_conserved:", GAPDH_len_conserved)
-print("GAPDH_len_non_conserved:", GAPDH_len_non_conserved)
 
 RBP1_list = file_to_list(RBP1_file)
 zero_one_RBP1_list = position(RBP1_list)
-#print(zero_one_RBP1_list)
-#print(len(zero_one_RBP1_list))
 
-print("RBP1")
 RBP1_conserved, RBP1_non_conserved, RBP1_len_conserved, RBP1_len_non_conserved,nc_not_saved, c_not_saved, nc_saved, c_saved = compare(zero_one_RBP1_list, RBP1_list[0])
-print("RBP1_len_conserved:", RBP1_len_conserved)
-print("RBP1_len_non_conserved:", RBP1_len_non_conserved)
 
 ###🥳🥳תוצאות סופיות🥳🥳###
 results_file=open('results/results_file', 'w')
@@ -312,61 +295,44 @@ results_file.write("Results:\n")
 results_file.write("\n")
 
 #GAPDH:
-#השם של כל חיה ואז האורך של הרצף שלה ומה האחוז עמודות שפסלנו בה
-results_file.write("GAPDH:\n")
-#GAPDH_data = writing_to_file_per_org(GAPDH_list,GAPDH_file,results_file)
+results_file.write("Protein name: GAPDH:\n")
 results_file.write("\n")
 
-#אחוזי השינוי בחלק הכי ארוך השמור והלא שמור#
-results_file.write(f"{GAPDH_conserved:.2f}% percent of the longest conserved region in the protein changed\n")
-results_file.write(f"{GAPDH_non_conserved:.2f}% percent of the longest non-conserved region in the protein changed\n")
-results_file.write("\n")
-
-#הרצף השמור הארוך ביותר#
+#אורך הרצף השמור והלא שמור הארוך ביותר
 results_file.write(f" longest conserved sequence length={GAPDH_len_conserved}\n")
+results_file.write(f" longest non conserved sequence length={GAPDH_len_non_conserved}\n")
+
 results_file.write("\n")
 
-#אחוזים של כמה פעמים מופיע 1(שמור), 0(לא שמור) ו- (פסול) ומעביר לאחוזים
-GAPDH="GAPDH"
-GAPDH_columns_count=columns_count(zero_one_GAPDH_list,results_file,GAPDH)
+# קריאה לפונקציה שמדפיסה לקובץ התוצאות את אחוז ומספר העמדות השמורות, הלא שמורות ואלו שנפסלו
+GAPDH_columns_count=columns_count(zero_one_GAPDH_list,results_file,"GAPDH")
 
 ###RBP1###
 results_file.write("\n")
-results_file.write("\n")
-results_file.write("RBP1:\n")
+results_file.write("Protein name: RBP1:\n")
 
-#השם של כל חיה ואז האורך של הרצף שלה ומה האחוז עמודות שפסלנו בה
-#RBP1_data=writing_to_file_per_org(RBP1_list,RBP1_file,results_file)
 results_file.write("\n")
 
-#אחוזי השינוי בחלק הכי ארוך השמור והלא שמור#
-results_file.write(f"{RBP1_conserved:.2f}% percent of the longest conserved region in the protein changed\n")
-results_file.write(f"{RBP1_non_conserved:.2f}% percent of the longest non-conserved region in the protein changed\n")
-results_file.write("\n")
-
-#הרצף השמור הארוך ביותר#
+#אורך הרצף השמור והלא שמור הארוך ביותר
 results_file.write(f" longest conserved sequence length={RBP1_len_conserved}\n")
+results_file.write(f" longest non conserved sequence length={RBP1_len_non_conserved}\n")
+
 results_file.write("\n")
 
-#אחוזים של כמה פעמים מופיע 1(שמור), 0(לא שמור) ו- (פסול) ומעביר לאחוזים
-RBP1="RBP1"
-RBP1_columns_count=columns_count(zero_one_RBP1_list,results_file,RBP1)
+# קריאה לפונקציה שמדפיסה לקובץ התוצאות את אחוז ומספר העמדות השמורות, הלא שמורות ואלו שנפסלו
+RBP1_columns_count=columns_count(zero_one_RBP1_list,results_file,"RBP1")
 results_file.write("\n")
 
 #------------------------------------------------------------------------------
-
-#קבצים שנכניס לאקסל ונעשה גרפים#
-#אחוזים של שמור ולא שמור#
+# פתיחת הקבצים שיכילו את תוצאות הסימולציה לכתיבה
 GAPDH_graph_file = open('results/GAPDH_graph', 'w')
 RBP1_graph_file = open('results/RBP1_graph', 'w')
 
-print("GAPDH")
+# קריאה לפונקציה שמבצעת את הסימולציה , כל פעם לחלבון אחר.
 GAPDH_nc_not_saved, GAPDH_c_not_saved, GAPDH_nc_saved, GAPDH_c_saved = graph_changes (zero_one_GAPDH_list, GAPDH_list, GAPDH_graph_file)
-
-
-print("RBP1")
 RBP1_nc_not_saved, RBP1_c_not_saved, RBP1_nc_saved, RBP1_c_saved = graph_changes (zero_one_RBP1_list, RBP1_list, RBP1_graph_file)
 
+# סגירת כל הקבצים.
 GAPDH_file.close()
 RBP1_file.close()
 results_file.close()
