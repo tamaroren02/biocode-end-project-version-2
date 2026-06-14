@@ -83,8 +83,8 @@ def amino_acid_groups(original_seq, mutated_seq):
     Hydrophobic_sidechains = ['A', 'V', 'I','L', 'M', 'F','Y', 'W']
     """
 
+
     nt_cnt_svd_grp=0
-    
     for i in range(len(original_seq)):
         if original_seq[i] != mutated_seq[i]:
             same_group = False
