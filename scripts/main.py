@@ -65,7 +65,7 @@ def amino_acid_groups(original_seq, mutated_seq):
     '''
     הפונקציה מקבלת רצף בצורתו המקורית ואחרי מוטציות, היא בודקת כמה שינויים יש בין שני הרצפים לפי המיפוי של החומצות אמינו לפי התכונות שלהן.
     מקבלת: original_seq, mutated_seq
-    מחזירה: cnt_svd_grp, nt_cnt_svd_grp
+    מחזירה: nt_cnt_svd_grp
     '''
     #מיפוי תכונות של חומצות אמינו
     groups = [['R','H','K'],['D','E'],['S', 'T', 'N', 'Q'],
@@ -82,7 +82,7 @@ def amino_acid_groups(original_seq, mutated_seq):
     #5
     Hydrophobic_sidechains = ['A', 'V', 'I','L', 'M', 'F','Y', 'W']
     """
-    cnt_svd_grp = 0
+
     nt_cnt_svd_grp=0
 
     for i in range(len(original_seq)):
@@ -98,7 +98,7 @@ def amino_acid_groups(original_seq, mutated_seq):
             else:
                 nt_cnt_svd_grp += 1
 
-    return cnt_svd_grp, nt_cnt_svd_grp
+    return nt_cnt_svd_grp
 
 #------------------------------------------------
 
@@ -130,7 +130,7 @@ def compare(zero_and_one_list, animle_list):
     '''
     הפונקציה מעבירה את האזור השמור והלא שמור הארוך ביותר בחלבון מסוים מוטציות ומחשבת את אחוז המוטציות שהובילו לשינוי הקבוצה הכימית של החומצות אמינו.
     מקבלת: zero_and_one_list, animle_list
-    מחזירה: conserved_percentage, non_conserved_percentage, len_conserved, len_non_conserved, nc_not_saved, c_not_saved, nc_saved, c_saved
+    מחזירה: conserved_percentage, non_conserved_percentage, len_conserved, len_non_conserved
     '''
     
     len_conserved, start1, stop1 = max_seq(1, zero_and_one_list)
@@ -139,7 +139,7 @@ def compare(zero_and_one_list, animle_list):
     num_mutation1 = int(len_conserved * 0.2)
     conserved_mutated_seq = Mutate_protein(conserved_seq_original, num_mutation1)
     
-    c_saved ,c_not_saved = amino_acid_groups(conserved_seq_original, conserved_mutated_seq)
+    c_not_saved = amino_acid_groups(conserved_seq_original, conserved_mutated_seq)
     
     if len_conserved != 0:
         conserved_percentage = 100 * ( c_not_saved / int(len_conserved * 0.2))
@@ -156,7 +156,7 @@ def compare(zero_and_one_list, animle_list):
 
     non_conserved_seq_mutated = Mutate_protein(non_conserved_seq_original, num_mutation0)
 
-    nc_saved,nc_not_saved  = amino_acid_groups(non_conserved_seq_original, non_conserved_seq_mutated)
+    nc_not_saved  = amino_acid_groups(non_conserved_seq_original, non_conserved_seq_mutated)
 
     if len_non_conserved != 0:
         non_conserved_percentage = 100 * ( nc_not_saved / int(len_non_conserved * 0.2))
@@ -164,10 +164,8 @@ def compare(zero_and_one_list, animle_list):
     else:
         non_conserved_percentage = 0
 
-    #להלן פירוט על חלק משמות המשתנים:
-    #nc_not_saved = non_conserved_cnt_not_saved  ,c_not_saved = conserved_cnt_not_saved
-    #nc_saved = non_conserved_cnt_saved  , c_saved = conserved_cnt_saved
-    return conserved_percentage, non_conserved_percentage, len_conserved, len_non_conserved, nc_not_saved, c_not_saved, nc_saved, c_saved
+    
+    return conserved_percentage, non_conserved_percentage, len_conserved, len_non_conserved
 
 #------------------------------------------------
 def file_to_list(file):
@@ -252,7 +250,7 @@ def graph_changes (zero_and_one_list, organism_list,graph_file):
     graph_file.write(f"conserved,non_conserved\n")
 
     for i in range(num_reps):  
-        conserved, non_conserved, conserved_amount, conserved_amount, nc_not_saved, c_not_saved, nc_saved, c_saved= compare(zero_and_one_list,organism_list[0])
+        conserved, non_conserved, conserved_amount, conserved_amount = compare(zero_and_one_list,organism_list[0])
         
         graph_file.write(f"{conserved:.2f}%,{non_conserved:.2f}%\n")
 
@@ -277,16 +275,24 @@ c_saved=0
 nc_not_saved=0
 c_not_saved=0
 
-#
+#העברת הרצפים בקבצי העימוד לרשימה של רשימות
 GAPDH_list = file_to_list(GAPDH_file)
+# יצירת הרשימה שמעידה עם מידת שימור החלבון וכל כל מיקום בו בפרט
 zero_one_GAPDH_list = position(GAPDH_list)
-GAPDH_conserved, GAPDH_non_conserved, GAPDH_len_conserved, GAPDH_len_non_conserved,nc_not_saved, c_not_saved, nc_saved, c_saved = compare(zero_one_GAPDH_list, GAPDH_list[0])
+# קריאה לפונקציה שבה מוצאים את הרצפים השמורים והלא שמורים הכי ארוכים, עושים להם מוטציות ובודקים מהו אחוז המוטציות שהוביל לשינוי הקבוצה הכימית של חומת אמינו.
+# בנוסף, הפונקציה מחזירה גם את אורכי הרצפים שתוארו לעיל
+GAPDH_conserved, GAPDH_non_conserved, GAPDH_len_conserved, GAPDH_len_non_conserved = compare(zero_one_GAPDH_list, GAPDH_list[0])
 
+
+#העברת הרצפים בקבצי העימוד לרשימה של רשימות
 RBP1_list = file_to_list(RBP1_file)
+# יצירת הרשימה שמעידה עם מידת שימור החלבון וכל כל מיקום בו בפרט
 zero_one_RBP1_list = position(RBP1_list)
-RBP1_conserved, RBP1_non_conserved, RBP1_len_conserved, RBP1_len_non_conserved,nc_not_saved, c_not_saved, nc_saved, c_saved = compare(zero_one_RBP1_list, RBP1_list[0])
+# קריאה לפונקציה שבה מוצאים את הרצפים השמורים והלא שמורים הכי ארוכים, עושים להם מוטציות ובודקים מהו אחוז המוטציות שהוביל לשינוי הקבוצה הכימית של חומת אמינו.
+# בנוסף, הפונקציה מחזירה גם את אורכי הרצפים שתוארו לעיל
+RBP1_conserved, RBP1_non_conserved, RBP1_len_conserved, RBP1_len_non_conserved = compare(zero_one_RBP1_list, RBP1_list[0])
 
-###🥳🥳תוצאות סופיות🥳🥳###
+###תוצאות סופיות###
 results_file=open('results/results_file', 'w')
 
 results_file.write("Results:\n")
@@ -327,8 +333,8 @@ GAPDH_graph_file = open('results/GAPDH_graph', 'w')
 RBP1_graph_file = open('results/RBP1_graph', 'w')
 
 # קריאה לפונקציה שמבצעת את הסימולציה , כל פעם לחלבון אחר.
-GAPDH_nc_not_saved, GAPDH_c_not_saved, GAPDH_nc_saved, GAPDH_c_saved = graph_changes (zero_one_GAPDH_list, GAPDH_list, GAPDH_graph_file)
-RBP1_nc_not_saved, RBP1_c_not_saved, RBP1_nc_saved, RBP1_c_saved = graph_changes (zero_one_RBP1_list, RBP1_list, RBP1_graph_file)
+graph_changes (zero_one_GAPDH_list, GAPDH_list, GAPDH_graph_file)
+graph_changes (zero_one_RBP1_list, RBP1_list, RBP1_graph_file)
 
 # סגירת כל הקבצים.
 GAPDH_file.close()
@@ -336,6 +342,3 @@ RBP1_file.close()
 results_file.close()
 GAPDH_graph_file.close()
 RBP1_graph_file.close()
-
-x=1.6
-print(int(x))
