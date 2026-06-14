@@ -301,6 +301,8 @@ results_file.write("\n")
 #GAPDH:
 results_file.write("Protein name: GAPDH:\n")
 results_file.write("\n")
+results_file.write(f"Protein length: {len(GAPDH_list[0])}:\n")
+results_file.write("\n")
 
 #אורך הרצף השמור והלא שמור הארוך ביותר
 results_file.write(f" longest conserved sequence length={GAPDH_len_conserved}\n")
@@ -315,6 +317,7 @@ GAPDH_columns_count=columns_count(zero_one_GAPDH_list,results_file,"GAPDH")
 results_file.write("\n")
 results_file.write("Protein name: RBP1:\n")
 
+results_file.write(f"Protein length: {len(RBP1_list[0])}:\n")
 results_file.write("\n")
 
 #אורך הרצף השמור והלא שמור הארוך ביותר
