@@ -2,6 +2,8 @@ Results:
 
 Protein name: GAPDH:
 
+Protein length: 341:
+
  longest conserved sequence length=34
  longest non conserved sequence length=8
 
@@ -10,6 +12,7 @@ Percentage and number of non conserved positions in the GAPDH protein: 27.27% (9
 Percentage and number of conserved positions in the GAPDH protein: 70.38% (240)
 
 Protein name: RBP1:
+Protein length: 1974:
 
  longest conserved sequence length=55
  longest non conserved sequence length=28
