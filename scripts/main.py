@@ -277,15 +277,13 @@ c_saved=0
 nc_not_saved=0
 c_not_saved=0
 
-
+#
 GAPDH_list = file_to_list(GAPDH_file)
 zero_one_GAPDH_list = position(GAPDH_list)
-
 GAPDH_conserved, GAPDH_non_conserved, GAPDH_len_conserved, GAPDH_len_non_conserved,nc_not_saved, c_not_saved, nc_saved, c_saved = compare(zero_one_GAPDH_list, GAPDH_list[0])
 
 RBP1_list = file_to_list(RBP1_file)
 zero_one_RBP1_list = position(RBP1_list)
-
 RBP1_conserved, RBP1_non_conserved, RBP1_len_conserved, RBP1_len_non_conserved,nc_not_saved, c_not_saved, nc_saved, c_saved = compare(zero_one_RBP1_list, RBP1_list[0])
 
 ###🥳🥳תוצאות סופיות🥳🥳###
