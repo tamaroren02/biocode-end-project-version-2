@@ -128,11 +128,11 @@ def Mutate_protein(seq, num_mutation):
 #------------------------------------------------
 def compare(zero_and_one_list, animle_list):
     '''
-    הפונקציה מעבירה את האזור השמור והלא שמור הארוך ביותר בחלבון מסוים מוטציות ומחזירה באחוזים כמה כל אחד מהם השתנה.
+    הפונקציה מעבירה את האזור השמור והלא שמור הארוך ביותר בחלבון מסוים מוטציות ומחשבת את אחוז המוטציות שהובילו לשינוי הקבוצה הכימית של החומצות אמינו.
     מקבלת: zero_and_one_list, animle_list
-    מחזירה: conserved_percentage, non_conserved_percentage
+    מחזירה: conserved_percentage, non_conserved_percentage, len_conserved, len_non_conserved, nc_not_saved, c_not_saved, nc_saved, c_saved
     '''
-    #print("zero_and_one_list",zero_and_one_list)
+    
     len_conserved, start1, stop1 = max_seq(1, zero_and_one_list)
     conserved_seq_original = animle_list[start1: stop1 + 1]
 
@@ -140,9 +140,8 @@ def compare(zero_and_one_list, animle_list):
     conserved_mutated_seq = Mutate_protein(conserved_seq_original, num_mutation1)
     
     c_saved ,c_not_saved = amino_acid_groups(conserved_seq_original, conserved_mutated_seq)
-    #print("len_conserved",len_conserved)
+    
     if len_conserved != 0:
-        # חישוב בכמה אחוזים הרצף ישתנה
         conserved_percentage = 100 * ( c_not_saved / int(len_conserved * 0.2))
     
     else:
@@ -153,14 +152,13 @@ def compare(zero_and_one_list, animle_list):
     non_conserved_seq_original = animle_list[start0: stop0 + 1]
 
     num_mutation0 = int(len_non_conserved * 0.2)
-    #print("len_non_conserved",len_non_conserved)
+    
 
     non_conserved_seq_mutated = Mutate_protein(non_conserved_seq_original, num_mutation0)
 
     nc_saved,nc_not_saved  = amino_acid_groups(non_conserved_seq_original, non_conserved_seq_mutated)
 
     if len_non_conserved != 0:
-        # חישוב בכמה אחוזים הרצף ישתנה
         non_conserved_percentage = 100 * ( nc_not_saved / int(len_non_conserved * 0.2))
         
     else:
@@ -213,29 +211,14 @@ def position(protein_list):
     return zero_one_list
 
 #------------------------------------------------
-
-def seq_lengths(seq_list,organism_file):
-    #מקבלת את הליסט של האורגניזמים, הקובץ,ואת הקובץ שרושמים אליו את התשובות הסופיות
-    #הפונקציה מוצאת את אורך כל אחד מהאורגניזמים ומכניסה לקובץ התוצאות הסופיות את השם של האורגניזם ומה האורך שלו
-    organism_file.seek(0)
-    seq_lengths_list = []
-    organism_names_list = []
-
-    for seq in seq_list:
-        seq_lengths_list.append(len(seq))
-    
-    for line in organism_file:
-        name=line
-        if line.startswith(">"):
-            organism_name = line[1:line.find("_")]
-            organism_names_list.append(organism_name)
-    return organism_names_list,seq_lengths_list
-#------------------------------------------------
     
 def columns_count(zero_one_list,file_for_results,protein_name):
-    #מקבל את הרשימה של 1(שמור), 0(לא שמור) ,-(פסול) 
-    #את הקובץ לתוצאות ואת שם החלבון
-    #מה היא עושה:מדפיסה אל תוך קובץ התוצאות אחוז של כמה כל אחד מהם הופיע ברשימה
+    '''
+    הפונקציה מדפיסה לקובץ התוצאות את אחוז העמדות השמורות, הלא שמורות ואלה שנפסלו בחלבון.
+    מקבלת: zero_one_list,file_for_results,protein_name
+    מחזירה: הפונקציה לא מחזירה כלום.
+    '''
+
     columns_dict={}
     zero_one_list_amount=len(zero_one_list)
     for i in range(zero_one_list_amount):
@@ -253,18 +236,15 @@ def columns_count(zero_one_list,file_for_results,protein_name):
         elif y == "-":
             file_for_results.write(f"precent of disqualified positions in {protein_name} protein= {columns_precentage:.2f}%\n")
 
-#------------------------------------------------
-'''def writing_to_file_per_org(seq_list,organism_file,file_for_results):
-    #כותב לתוך הקובץ את השם של כל חיה : מה האורך שלה וכמה עמודות פסלנו בה
-    organism_names_list,seq_lengths_list=seq_lengths(seq_list,organism_file)
-    for i in range(8):
-        file_for_results.write(f"{organism_names_list[i]},")
-    file_for_results.write(f"\ntheir mutual length={seq_lengths_list[i]}\n")'''
+
 #------------------------------------------------
 
 def graph_changes (zero_and_one_list, organism_list,graph_file):
     #קבצים שנכניס לאקסל ונעשה גרפים#
     #אחוזים של שמור ולא שמור#
+    '''
+    הפונקציה מבצעת סימולציה- אחוז המוטציות שהובילו לשינוי קבוצה כימית של חומצת אמינו 
+    '''
     num_reps=100
     total_nc_not_saved=0
     total_c_not_saved=0
