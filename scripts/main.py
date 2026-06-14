@@ -299,7 +299,7 @@ results_file.write("\n")
 #GAPDH:
 results_file.write("Protein name: GAPDH:\n")
 results_file.write("\n")
-results_file.write(f"Protein length: {len(GAPDH_list[0])}:\n")
+results_file.write(f"Protein length: {len(GAPDH_list[0])}\n")
 results_file.write("\n")
 
 #אורך הרצף השמור והלא שמור הארוך ביותר
